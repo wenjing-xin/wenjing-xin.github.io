@@ -43,7 +43,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-18T01:35:00.000Z">
-<meta property="article:modified_time" content="2024-01-18T01:36:57.534Z">
+<meta property="article:modified_time" content="2024-02-05T14:37:41.590Z">
 <meta property="article:author" content="稳静逐梦">
 <meta property="article:tag" content="杂谈">
 <meta property="article:tag" content="web">
@@ -1875,7 +1875,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1707143337319),
+    lastupdate: new Date(1707143895219),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate","webinfo","music"],
       for_post: ["toc"],
@@ -2760,7 +2760,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1 id="一、前端的发展历史"><a href="#一、前端的发展历史" class="headerlink" title="一、前端的发展历史"></a>一、前端的发展历史</h1><p><strong>石器时代：</strong></p>
+    <h2 id="一、前端的发展历史"><a href="#一、前端的发展历史" class="headerlink" title="一、前端的发展历史"></a>一、前端的发展历史</h2><p><strong>石器时代：</strong></p>
 <ul>
 <li>1990 年，第一个 Web 浏览器诞生了。这是前端这个技术的起点，代表这一年它出生了。后面的时间里，前端圈有很多里程碑事件。</li>
 <li>1994 年，网景公司发布第一个商业浏览器 Navigator。</li>
@@ -2781,7 +2781,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><strong>工业时代:</strong></p>
 <p>AngularJS 的诞生，引领了前端 MVVM 模式的潮流；Node.js 的诞生，让前端有了入侵后端的能力，也加速了前端工程化的诞生。现在前端三大框架 Angular、React、Vue 的发展主线，也就是从这里开始的。</p>
 <p>所谓 MVVM，就是在前端的场景下，把 Controller 变成了 View-Model 层，作为 Model 和 View 的桥梁，Model 数据层和 View 视图层交给 View-Model 来同步。</p>
-<h1 id="二、前端三大框架："><a href="#二、前端三大框架：" class="headerlink" title="二、前端三大框架："></a>二、前端三大框架：</h1><p>在前端 MVVM 模式下，不同框架的目标都是一致的，就是利用数据驱动页面，但是怎么处理数据的变化，各个框架走出了不同的路线。</p>
+<h2 id="二、前端三大框架："><a href="#二、前端三大框架：" class="headerlink" title="二、前端三大框架："></a>二、前端三大框架：</h2><p>在前端 MVVM 模式下，不同框架的目标都是一致的，就是利用数据驱动页面，但是怎么处理数据的变化，各个框架走出了不同的路线。</p>
 <img src="https://static001.geekbang.org/resource/image/b0/93/b0402b9e1b4cb22877fcffb8b43d0193.jpg?wh=1208x678" class="lazyload" data-srcset="https://static001.geekbang.org/resource/image/b0/93/b0402b9e1b4cb22877fcffb8b43d0193.jpg?wh=1208x678" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="zoom:40%;border-radius:10px">
 
 <p>这些框架要回答的核心问题就是，数据发生变化后，我们怎么去通知页面更新。各大框架在这个步骤上，各显神通：</p>
@@ -2805,7 +2805,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>浏览器操作 DOM 一直都是性能杀手，而虚拟 DOM 的 Diff 的逻辑，又能够确保尽可能少的操作 DOM，这也是虚拟 DOM 驱动的框架性能一直比较优秀的原因之一。</p>
 <img src="https://static001.geekbang.org/resource/image/b2/b4/b262c52d5c353008715003fa263403b4.jpg?wh=1970x1445" class="lazyload" data-srcset="https://static001.geekbang.org/resource/image/b2/b4/b262c52d5c353008715003fa263403b4.jpg?wh=1970x1445" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="zoom:25%">
 
-<h1 id="三、vue-和-react-框架的对比"><a href="#三、vue-和-react-框架的对比" class="headerlink" title="三、vue 和 react 框架的对比"></a>三、vue 和 react 框架的对比</h1><p>通过上面对前端三大框架的介绍，我们不难发现 Vue 和 React 在数据发生变化后，在通知页面更新的方式上有明显的不同，通俗的来说，就是：<strong>在 Vue 框架下，如果数据变了，那框架会主动告诉你修改了哪些数据；而 React 的数据变化后，我们只能通过新老数据的计算 Diff 来得知数据的变化。</strong></p>
+<h2 id="三、vue-和-react-框架的对比"><a href="#三、vue-和-react-框架的对比" class="headerlink" title="三、vue 和 react 框架的对比"></a>三、vue 和 react 框架的对比</h2><p>通过上面对前端三大框架的介绍，我们不难发现 Vue 和 React 在数据发生变化后，在通知页面更新的方式上有明显的不同，通俗的来说，就是：<strong>在 Vue 框架下，如果数据变了，那框架会主动告诉你修改了哪些数据；而 React 的数据变化后，我们只能通过新老数据的计算 Diff 来得知数据的变化。</strong></p>
 <p>这两个解决方案都解决了数据变化后，如何通知页面更新的问题，并且迅速地获得了很高的占有率，但是他们都碰到了性能的瓶颈：</p>
 <ul>
 <li>对于 Vue 来说，它的一个核心就是“响应式”，也就是数据变化后，会主动通知我们。响应式数据新建 Watcher 监听，本身就比较损耗性能，项目大了之后每个数据都有一个 watcher 会影响性能。</li>
@@ -2875,7 +2875,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               <div class="license-meta-item">
                 <div class="license-meta-title">更新于</div>
-                <div class="license-meta-text">2024年1月18日</div>
+                <div class="license-meta-text">2024年2月5日</div>
               </div>
               
               
@@ -2910,10 +2910,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-18T09:36:57+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-02-05T22:37:41+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年1月18日</p>
+    <p>更新于：2024年2月5日</p>
   </a>
 </div>
 
@@ -3069,7 +3069,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2"><span class="toc-text">一、前端的发展历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%89%8D%E7%AB%AF%E4%B8%89%E5%A4%A7%E6%A1%86%E6%9E%B6%EF%BC%9A"><span class="toc-text">二、前端三大框架：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81vue-%E5%92%8C-react-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">三、vue 和 react 框架的对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol>
     </div>
   </section>
 
@@ -3917,7 +3917,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4146,7 +4146,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/前端/","name":"前端"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/10/18/浅谈前端发展史/","name":"浅谈前端发展史"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"浅谈前端发展史","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/10/18/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%8F%91%E5%B1%95%E5%8F%B2/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/10/18/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%8F%91%E5%B1%95%E5%8F%B2/","wordCount":0,"datePublished":"2023-10-18T01:35:00.000Z","dateModified":"2024-01-18T01:36:57.534Z","articleSection":"前端","keywords":"杂谈,web","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/前端/","name":"前端"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/10/18/浅谈前端发展史/","name":"浅谈前端发展史"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"浅谈前端发展史","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/10/18/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%8F%91%E5%B1%95%E5%8F%B2/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/10/18/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%8F%91%E5%B1%95%E5%8F%B2/","wordCount":0,"datePublished":"2023-10-18T01:35:00.000Z","dateModified":"2024-02-05T14:37:41.590Z","articleSection":"前端","keywords":"杂谈,web","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
