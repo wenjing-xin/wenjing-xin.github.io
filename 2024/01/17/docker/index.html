@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#5.7.7'>
+    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
   <meta name="generator" content="Hexo 6.3.0">
-  <meta name="Volantis" content="5.7.7">
+  <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
@@ -23,8 +23,21 @@
   <!-- import head_begin begin -->
   <!-- import head_begin end -->
   <!-- Custom Files headBegin begin-->
+  <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+	<link rel="stylesheet" href="./custom/darkmode.css" defer/>
+  </head>
+  <body itemscope itemtype="http://schema.org/WebPage">
   
+    <script src="./custom/darkmode.js" defer></script>
+    <script src="./custom/subtitle.js" defer></script>
+  </body>
+</html>
+
   <!-- Custom Files headBegin end-->
+  <!-- front-matter head_begin begin -->
+  <!-- front-matter head_begin end -->
   <link rel="preload" href="/css/style.css" as="style">
   <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/VarelaRound/VarelaRound-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/UbuntuMono/UbuntuMono-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -39,11 +52,11 @@
 <meta property="og:title" content="基础篇：容器化部署技术-—docker，从此摆脱多环境配置的苦恼！">
 <meta property="og:url" content="https://wenjing-xin.github.io/2024/01/17/docker/index.html">
 <meta property="og:site_name" content="dreamChaser">
-<meta property="og:description" content="前言我们设想这样一个场景，现在 leader 给了你一个任务，让你把开发完毕的应用程序进行打包、分发、部署，要求多平台通用，程序的前后端是单独的工程、后端依赖了 mysql、redis、RabbitMQ 等。按常规的运维思路就是，先将配置好的前后端程序分别打包 –&gt; 将打包文件上传到服务器 –&gt; 后端安装 mysql、redis、RabbitMQ –&gt; 配置 nginx 服务器实">
+<meta property="og:description" content="前言 我们设想这样一个场景，现在 leader 给了你一个任务，让你把开发完毕的应用程序进行打包、分发、部署，要求多平台通用，程序的前后端是单独的工程、后端依赖了 mysql、redis、RabbitMQ 等。按常规的运维思路就是，先将配置好的前后端程序分别打包 --&gt; 将打包文件上传到服务器 --&gt; 后端安装 mysql、redis、RabbitMQ --&gt; 配置 nginx">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-01-17T10:05:00.000Z">
-<meta property="article:modified_time" content="2024-01-18T01:37:56.146Z">
+<meta property="article:modified_time" content="2024-02-15T13:46:45.505Z">
 <meta property="article:author" content="稳静逐梦">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="容器化部署技术">
@@ -57,7 +70,7 @@
 :root {
   --color-site-body: #f4f4f4;
   --color-site-bg: #f4f4f4;
-  --color-site-inner: #303133;
+  --color-site-inner: #000;
   --color-site-footer: #409eff;
   --color-card: #fff;
   --color-text: #444;
@@ -76,7 +89,7 @@
   --color-meta: #888;
   --color-read-bkg: #e0d8c8;
   --color-read-post: #f8f1e2;
-  --color-copyright-bkg: #f5f5f5;
+  --color-copyright-bkg: ;
 }
 * {
   box-sizing: border-box;
@@ -117,13 +130,13 @@ html >::-webkit-scrollbar-track-piece {
   background: transparent;
 }
 html >::-webkit-scrollbar-thumb {
-  background: #44d7b6;
+  background: ;
   cursor: pointer;
   border-radius: 2px;
   -webkit-border-radius: 2px;
 }
 html >::-webkit-scrollbar-thumb:hover {
-  background: #ff5722;
+  background: ;
 }
 body {
   background-color: var(--color-site-body);
@@ -618,122 +631,6 @@ button {
   -moz-opacity: 1;
   border-bottom: 2px solid var(--color-site-inner);
 }
-.cover-wrapper.dock .menu,
-.cover-wrapper.featured .menu,
-.cover-wrapper.focus .menu {
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-.cover-wrapper.dock .menu .list-h a,
-.cover-wrapper.featured .menu .list-h a,
-.cover-wrapper.focus .menu .list-h a {
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
-  line-height: 24px;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-bottom: none;
-  text-align: center;
-  align-content: flex-end;
-  color: rgba(68,68,68,0.7);
-  font-size: 1.5rem;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h a,
-  .cover-wrapper.featured .menu .list-h a,
-  .cover-wrapper.focus .menu .list-h a {
-    padding: 12px 8px;
-  }
-}
-.cover-wrapper.dock .menu .list-h a i,
-.cover-wrapper.featured .menu .list-h a i,
-.cover-wrapper.focus .menu .list-h a i {
-  margin: 8px;
-}
-.cover-wrapper.dock .menu .list-h a p,
-.cover-wrapper.featured .menu .list-h a p,
-.cover-wrapper.focus .menu .list-h a p {
-  font-size: 0.875rem;
-}
-.cover-wrapper.dock .menu .list-h a.active,
-.cover-wrapper.featured .menu .list-h a.active,
-.cover-wrapper.focus .menu .list-h a.active {
-  background: var(--color-card);
-  backdrop-filter: none;
-}
-.cover-wrapper.dock .menu .list-h a.active i,
-.cover-wrapper.featured .menu .list-h a.active i,
-.cover-wrapper.focus .menu .list-h a.active i,
-.cover-wrapper.dock .menu .list-h a.active i+p,
-.cover-wrapper.featured .menu .list-h a.active i+p,
-.cover-wrapper.focus .menu .list-h a.active i+p {
-  color: #44d7b6;
-}
-.cover-wrapper.dock .menu .list-h a.active img+p,
-.cover-wrapper.featured .menu .list-h a.active img+p,
-.cover-wrapper.focus .menu .list-h a.active img+p {
-  color: var(--color-text);
-}
-.cover-wrapper.dock .menu .list-h a:hover,
-.cover-wrapper.featured .menu .list-h a:hover,
-.cover-wrapper.focus .menu .list-h a:hover {
-  background: var(--color-card);
-}
-.cover-wrapper.dock .top {
-  margin-bottom: 48px;
-}
-.cover-wrapper.dock .menu {
-  background: rgba(255,255,255,0.5);
-  position: absolute;
-  bottom: 0;
-  max-width: 100%;
-}
-.cover-wrapper.dock .menu .list-h {
-  flex-wrap: nowrap;
-  -webkit-flex-wrap: nowrap;
-  -khtml-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -o-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  margin: 4px;
-}
-.cover-wrapper.dock .menu .list-h a+a {
-  margin-left: 4px;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h {
-    overflow-x: scroll;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-track-piece {
-    background: transparent;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb {
-    background: #44d7b6;
-    cursor: pointer;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb:hover {
-    background: #ff5722;
-  }
-}
-@supports (backdrop-filter: blur(20px)) {
-  .cover-wrapper.dock .menu {
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: saturate(200%) blur(20px);
-  }
-}
 .cover-wrapper #parallax-window {
   position: absolute;
   width: 100%;
@@ -804,7 +701,7 @@ button {
     --color-mode: 'dark';
   }
   :root:not([color-scheme]) {
-    --color-site-body: #121212;
+    --color-site-body: ;
     --color-read-bkg: #222;
     --color-read-post: #444;
     --color-site-bg: #222;
@@ -826,7 +723,7 @@ button {
     --color-list-hl: #69dfc4;
     --color-meta: #888;
     --color-link: #888;
-    --color-copyright-bkg: #21252b;
+    --color-copyright-bkg: ;
   }
   :root:not([color-scheme]) img {
     filter: brightness(70%) !important;
@@ -876,7 +773,7 @@ button {
   }
 }
 [color-scheme='dark'] {
-  --color-site-body: #121212;
+  --color-site-body: ;
   --color-read-bkg: #222;
   --color-read-post: #444;
   --color-site-bg: #222;
@@ -898,7 +795,7 @@ button {
   --color-list-hl: #69dfc4;
   --color-meta: #888;
   --color-link: #888;
-  --color-copyright-bkg: #21252b;
+  --color-copyright-bkg: ;
 }
 [color-scheme='dark'] img {
   filter: brightness(70%) !important;
@@ -1873,9 +1770,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   volantis.GLOBAL_CONFIG ={
     debug: "env",
-    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
+    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1707984893188),
+    lastupdate: new Date(1708012468541),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate","webinfo","music"],
       for_post: ["toc"],
@@ -2299,6 +2196,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd begin-->
   
   <!-- Custom Files headEnd end-->
+  <!-- front-matter head_end begin -->
+  <!-- front-matter head_end end -->
 </head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
@@ -2306,6 +2205,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files bodyBegin begin-->
     
     <!-- Custom Files bodyBegin end-->
+    <!-- front-matter body_begin begin -->
+    <!-- front-matter body_begin end -->
     <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
@@ -2453,7 +2354,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div class="m_search">
         <form name="searchform" class="form u-search-form">
           <i class="icon fa-solid fa-search fa-fw"></i>
-          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词" />
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
         </form>
       </div>
       
@@ -2595,7 +2496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
-      <div id="half" class='cover-wrapper post dock' style="display: ;">
+      <div id="half" class='cover-wrapper post search' style="display: ;">
         
   <div id="parallax-window"></div>
 
@@ -2603,13 +2504,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class='top'>
     
     
-      <p class="title">我思故而我生</p>
+      <p class="title"><font> <span>我思</span><span>故而</span><span>我生</span></font></p>
     
     
-      <p class="subtitle">岁月了无痕，时光轻染故事尘。百年光景如梦航，笔墨留香绘千行。</p>
+      <p class="subtitle"><div id="binft"></div></p>
     
   </div>
   <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
+          <i class="icon fa-solid fa-search fa-fw"></i>
+        </form>
+      </div>
+    
     <div class='menu navigation'>
       <div class='list-h'>
         
@@ -2618,42 +2527,42 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               
               active-action="action-home">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f4f0.svg'><p>博客</p>
+              <p>博客</p>
             </a>
           
             <a href="/categories"
               
               
               active-action="action-categories">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f396.svg'><p>分类</p>
+              <p>分类</p>
             </a>
           
             <a href="/tags"
               
               
               active-action="action-tags">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f389.svg'><p>标签</p>
+              <p>标签</p>
             </a>
           
             <a href="/archives"
               
               
               active-action="action-archives">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f5c3.svg'><p>归档</p>
+              <p>归档</p>
             </a>
           
             <a href="/friends"
               
               
               active-action="action-friends">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f516.svg'><p>友链</p>
+              <p>友链</p>
             </a>
           
             <a href="/about"
               
               
               active-action="action-about">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f9ec.svg'><p>关于</p>
+              <p>关于</p>
             </a>
           
         
@@ -2685,9 +2594,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
+    <div class='headimg-div'>
+      <a class='headimg-a'>
+        <img itemprop="image" class='headimg' src='https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171141746.png'/>
+      </a>
+    </div>
   
   <div class="article-meta" id="top">
     
@@ -2760,133 +2671,170 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们设想这样一个场景，现在 leader 给了你一个任务，让你把开发完毕的应用程序进行打包、分发、部署，要求多平台通用，程序的前后端是单独的工程、后端依赖了 mysql、redis、RabbitMQ 等。按常规的运维思路就是，先将配置好的前后端程序分别打包 –&gt; 将打包文件上传到服务器 –&gt; 后端安装 mysql、redis、RabbitMQ –&gt; 配置 nginx 服务器实现反向代理，虽然看上去步骤很简单，顺利部署成功，也不算太糟心，但是保不齐部署的时候，就会出现各种环境上的不兼容问题。此外，当一个程序依赖了五个、六个或者更多的环境时，按照这种传统的部署方式显然很繁琐，一旦遇到环境上的冲突、不兼容等问题，不禁让人陷入苦恼之中。假如有这样一种工具，<strong>能够将程序依赖的环境根据层级关系进行一个叠加</strong>，比如一个 Java 应用程序最底层肯定依赖的是 JDK，接着是一些数据库、中间件等其他环境，最后就是我们运行这个程序的一些入口，将这些环境根据层级关系叠加在一起，我们暂且将其称为安装包吧！<strong>而且这些安装包已经有人已经制作完毕并发布到公共仓库里边，当我们在部署我们的应用时，只需要按照这种工具规定的方式拉取安装包</strong>，部署岂不是方便很多了， <code>docker</code> 就应运而生了！</p>
+    <h2 id="前言">前言</h2>
+<p>我们设想这样一个场景，现在 leader 给了你一个任务，让你把开发完毕的应用程序进行打包、分发、部署，要求多平台通用，程序的前后端是单独的工程、后端依赖了 mysql、redis、RabbitMQ 等。按常规的运维思路就是，先将配置好的前后端程序分别打包 --&gt; 将打包文件上传到服务器 --&gt; 后端安装 mysql、redis、RabbitMQ --&gt; 配置 nginx 服务器实现反向代理，虽然看上去步骤很简单，顺利部署成功，也不算太糟心，但是保不齐部署的时候，就会出现各种环境上的不兼容问题。此外，当一个程序依赖了五个、六个或者更多的环境时，按照这种传统的部署方式显然很繁琐，一旦遇到环境上的冲突、不兼容等问题，不禁让人陷入苦恼之中。假如有这样一种工具，<strong>能够将程序依赖的环境根据层级关系进行一个叠加</strong>，比如一个 Java 应用程序最底层肯定依赖的是 JDK，接着是一些数据库、中间件等其他环境，最后就是我们运行这个程序的一些入口，将这些环境根据层级关系叠加在一起，我们暂且将其称为安装包吧！<strong>而且这些安装包已经有人已经制作完毕并发布到公共仓库里边，当我们在部署我们的应用时，只需要按照这种工具规定的方式拉取安装包</strong>，部署岂不是方便很多了， <code>docker</code> 就应运而生了！</p>
 <p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171141746.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171141746.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="docker"></p>
-<h2 id="一、什么是-Docker"><a href="#一、什么是-Docker" class="headerlink" title="一、什么是 Docker?"></a>一、什么是 Docker?</h2><p>docker 是一款可以为应用程序进行打包、分发、部署的工具，也可以理解为一个轻量的虚拟机，只需要虚拟机软件运行的环境，多余的一点都不需要。而 docker 可以帮助我们下载应用镜像，创建并运行镜像的容器，从而快速部署应用。<br>对于上边提到的打包、分发、部署、镜像、容器这些概念，屏幕前的你是否会有些疑惑？</p>
-<ul>
-<li>打包：就是将软件所需要的依赖，第三方库，软件包打包到一起，变成一个安装包。</li>
-<li>分发：你可以把你打包好的”安装包”上传到一个镜像仓库，其他人可以非常方便的获取和安装。</li>
-<li>部署：拿着”安装包”，就可以一行命令运行起来你的应用，在不同的平台上自动模拟出一摸一样的运行环境。</li>
-<li><strong>镜像</strong>（image）：<strong>将应用所需的函数库、依赖、配置等与应用一起打包得到的就是镜像</strong>。更加官方的说法就是：镜像是一个包含程序运行必要依赖环境和代码的只读文件，它采用分层的文件系统，将每一层的改变以读写层的形式增加到原来的只读文件上。哈哈，官方说法看来很晦涩难懂呀，<strong>我们只需要把它认为是一个安装包就行，随着使用的增加和深入，慢慢会理解的</strong>。</li>
-<li><strong>容器</strong>（container）：为每个镜像的应用创建的隔离运行环境就是容器，说白了就是一个进程。</li>
-<li>镜像仓库（repository）：存储和管理镜像的服务就是镜像仓库，目前，DockerHub 是最大的镜像仓库，其中包含各种常见的应用镜像。</li>
+<h2 id="一、什么是-Docker">一、什么是 Docker?</h2>
+<p>docker 是一款可以为应用程序进行打包、分发、部署的工具，也可以理解为一个轻量的虚拟机，只需要虚拟机软件运行的环境，多余的一点都不需要。而 docker 可以帮助我们下载应用镜像，创建并运行镜像的容器，从而快速部署应用。对于上边提到的打包、分发、部署、镜像、容器这些概念，屏幕前的你是否会有些疑惑？</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>打包：就是将软件所需要的依赖，第三方库，软件包打包到一起，变成一个安装包。</p>
+</li>
+<li class="lvl-2">
+<p>分发：你可以把你打包好的&quot;安装包&quot;上传到一个镜像仓库，其他人可以非常方便的获取和安装。</p>
+</li>
+<li class="lvl-2">
+<p>部署：拿着&quot;安装包&quot;，就可以一行命令运行起来你的应用，在不同的平台上自动模拟出一摸一样的运行环境。</p>
+</li>
+<li class="lvl-2">
+<p><strong>镜像</strong>（image）：<strong>将应用所需的函数库、依赖、配置等与应用一起打包得到的就是镜像</strong>。更加官方的说法就是：镜像是一个包含程序运行必要依赖环境和代码的只读文件，它采用分层的文件系统，将每一层的改变以读写层的形式增加到原来的只读文件上。哈哈，官方说法看来很晦涩难懂呀，<strong>我们只需要把它认为是一个安装包就行，随着使用的增加和深入，慢慢会理解的</strong>。</p>
+</li>
+<li class="lvl-2">
+<p><strong>容器</strong>（container）：为每个镜像的应用创建的隔离运行环境就是容器，说白了就是一个进程。</p>
+</li>
+<li class="lvl-2">
+<p>镜像仓库（repository）：存储和管理镜像的服务就是镜像仓库，目前，DockerHub 是最大的镜像仓库，其中包含各种常见的应用镜像。</p>
+</li>
 </ul>
 <p><strong>对于镜像和容器之间的关系我们需要有一定的了解，是非常重要的概念，是我们学习 docker 的基础</strong>，当然，我也不可能通过上边两个简单的概念就可以讲明白这两者之间的概念。打个比方吧，<span style="background: #40a9ff ">镜像（image）好比面向对象编程语言里边的类，而容器 (container)好比面向编程语言里类实例化后的对象。一个类可以有多个对象，同理，一个镜像可以有多一个容器。容器是由镜像实例话而来，简单来说，镜像就是文件，容器就是进程。</span>说到这里，你应该对两者的概念和关系有初步的理解了吧，<strong>镜像就是容器运行的基础，两者是辩证统一的关系</strong>。谈到这里，不得不提一下 docker 的生命周期了，它主要由三部分组成：镜像+容器+仓库。</p>
-<h2 id="二、docker-的安装"><a href="#二、docker-的安装" class="headerlink" title="二、docker 的安装"></a>二、docker 的安装</h2><p><a href="%5Bhttps://www.docker.com/products/docker-desktop%5D(https://www.docker.com/products/docker-desktop)">桌面版</a>   </p>
+<h2 id="二、docker-的安装">二、docker 的安装</h2>
+<p><a href="%5Bhttps://www.docker.com/products/docker-desktop%5D(https://www.docker.com/products/docker-desktop)">桌面版</a></p>
 <p><a href="%5Bhttps://docs.docker.com/engine/install/#server%5D(https://docs.docker.com/engine/install/#server)">服务器版 </a></p>
-<p>桌面版和服务器版的区别就是桌面版有 docker-compose 这个工具，而服务器版本没有，建议安装桌面版。<br>对于 mac 用户，可以使用 homebrew 安装，但是前提你得有 homebrew 安装工具，关于这个工具的安装，自行搜索网上的教程安装。当你电脑有 homebrew 时，直接用下面的命令行安装：</p>
+<p>桌面版和服务器版的区别就是桌面版有 docker-compose 这个工具，而服务器版本没有，建议安装桌面版。</p>
+<p>对于 mac 用户，可以使用 homebrew 安装，但是前提你得有 homebrew 安装工具，关于这个工具的安装，自行搜索网上的教程安装。当你电脑有 homebrew 时，直接用下面的命令行安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、docker-常用命令"><a href="#三、docker-常用命令" class="headerlink" title="三、docker 常用命令"></a>三、docker 常用命令</h2><p>当我们的电脑上安装了 docker 之后，接着我们便可以使用 docker 来安装软件，在此处，我们以安装 mysql 为例来认识 docker 的基本命令。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171444576.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171444576.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<h2 id="三、docker-常用命令">三、docker 常用命令</h2>
+<p>当我们的电脑上安装了 docker 之后，接着我们便可以使用 docker 来安装软件，在此处，我们以安装 mysql 为例来认识 docker 的基本命令。</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171444576.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171444576.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>在终端输入上述命令之后，就会安装好 mysql。关于这条命令的解读如下：</p>
-<ul>
-<li>docker run ：创建并运行一个容器，-d 是让容器在后台运行</li>
-<li>–name mysql ：给容器起个名字，必须唯一</li>
-<li>-p 3306:3306 ：设置端口映射</li>
-<li>-e KEY&#x3D;VALUE ：是设置环境变量</li>
-<li>mysql 指定映射镜像运行的名称。镜像命名一般格式为：镜像名称: 镜像版本 &#x3D;&#x3D;&gt; <code>[ repository ]: [ tag ]</code>，在没有指定版本的时候，默认是 latest 最新版本。<br>通过上边的小例子我们算是对 docker 的命令有了一定的了解，下边这张图是对 docker 命令的一个概述：</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>docker run ：创建并运行一个容器，-d 是让容器在后台运行</p>
+</li>
+<li class="lvl-2">
+<p>–name mysql ：给容器起个名字，必须唯一</p>
+</li>
+<li class="lvl-2">
+<p>-p 3306:3306 ：设置端口映射</p>
+</li>
+<li class="lvl-2">
+<p>-e KEY=VALUE ：是设置环境变量</p>
+</li>
+<li class="lvl-3">
+<p>mysql 指定映射镜像运行的名称。镜像命名一般格式为：镜像名称: 镜像版本 ==&gt; <code>[ repository ]: [ tag ]</code>，在没有指定版本的时候，默认是 latest 最新版本。通过上边的小例子我们算是对 docker 的命令有了一定的了解，下边这张图是对 docker 命令的一个概述：</p>
+</li>
 </ul>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171453530.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171453530.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<table>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171453530.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171453530.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
+<details open>
+<summary><span class="pre-summary">&nbsp;</span><strong>docker的其他命令，查看请展开</strong></summary><table>
 <thead>
 <tr>
-<th align="center">命令</th>
-<th align="center">具体作用</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">具体作用</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">docker pull</td>
-<td align="center">将远程镜像仓库的镜像拉取到本地镜像中，类似于 git 的推送，注意在拉取镜像到本地后，镜像已经开始运行了</td>
+<tbody>
+<tr>
+<td style="text-align:center">docker pull</td>
+<td style="text-align:center">将远程镜像仓库的镜像拉取到本地镜像中，类似于 git 的推送，注意在拉取镜像到本地后，镜像已经开始运行了</td>
 </tr>
 <tr>
-<td align="center">docker push</td>
-<td align="center">将本地仓库的镜像推送到远程镜像仓库中，类似于 git 的推送</td>
+<td style="text-align:center">docker push</td>
+<td style="text-align:center">将本地仓库的镜像推送到远程镜像仓库中，类似于 git 的推送</td>
 </tr>
 <tr>
-<td align="center">docker images</td>
-<td align="center">查看本地运行的镜像</td>
+<td style="text-align:center">docker images</td>
+<td style="text-align:center">查看本地运行的镜像</td>
 </tr>
 <tr>
-<td align="center">docker rmi</td>
-<td align="center">删除本地的镜像，具体命令为 docker rmi -f 镜像名称</td>
+<td style="text-align:center">docker rmi</td>
+<td style="text-align:center">删除本地的镜像，具体命令为 docker rmi -f 镜像名称</td>
 </tr>
 <tr>
-<td align="center">docker build</td>
-<td align="center">构建本地的镜像并运行</td>
+<td style="text-align:center">docker build</td>
+<td style="text-align:center">构建本地的镜像并运行</td>
 </tr>
 <tr>
-<td align="center">docker load</td>
-<td align="center">加载本地的镜像并运行</td>
+<td style="text-align:center">docker load</td>
+<td style="text-align:center">加载本地的镜像并运行</td>
 </tr>
 <tr>
-<td align="center">docker run</td>
-<td align="center">运行容器</td>
+<td style="text-align:center">docker run</td>
+<td style="text-align:center">运行容器</td>
 </tr>
 <tr>
-<td align="center">docker logs</td>
-<td align="center">产看容器运行的日志</td>
+<td style="text-align:center">docker logs</td>
+<td style="text-align:center">产看容器运行的日志</td>
 </tr>
 <tr>
-<td align="center">docker exec</td>
-<td align="center">进入容器内部</td>
+<td style="text-align:center">docker exec</td>
+<td style="text-align:center">进入容器内部</td>
 </tr>
 <tr>
-<td align="center">docker stop</td>
-<td align="center">停止容器运行</td>
+<td style="text-align:center">docker stop</td>
+<td style="text-align:center">停止容器运行</td>
 </tr>
 <tr>
-<td align="center">docker start</td>
-<td align="center">启动容器</td>
+<td style="text-align:center">docker start</td>
+<td style="text-align:center">启动容器</td>
 </tr>
 <tr>
-<td align="center">docker ps</td>
-<td align="center">查看正在运行的容器</td>
+<td style="text-align:center">docker ps</td>
+<td style="text-align:center">查看正在运行的容器</td>
 </tr>
 <tr>
-<td align="center">docker rm</td>
-<td align="center">删除容器</td>
+<td style="text-align:center">docker rm</td>
+<td style="text-align:center">删除容器</td>
 </tr>
-</tbody></table>
-<p>这里有一个技巧，命令的具体细节我们可以不记忆，可以通过 –help 指令来查看它的用法，比如 docker rm 删除容器，我们可以通过 <code>docker rm --help</code> 来查看他的具体用法：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171517962.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171517962.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<p>从终端的命令我们可看到 <code>docker rm -f 容器名称</code> 就是删除掉一个运行中的容器。通过这种方法我们便可以不用在记忆这么多繁琐的命令，只知道具体的命令关键字即可。<br>通过上边的学习，我们便可以拉取、删除、运行、查看镜像了。</p>
-<h2 id="四、容器目录挂载的方式"><a href="#四、容器目录挂载的方式" class="headerlink" title="四、容器目录挂载的方式"></a>四、容器目录挂载的方式</h2><p>通过上边的学习我们可以通过 docker 拉取远程镜像来部署我们的应用，现在有这样一个需求，用 nginx 部署一个 vue 项目，我们首先做的是拉取 nginx 镜像，接着配置 <code>nginx. conf</code> 文件，然后将 vue 打包的应用上传到 nginx 上。<br>那么，问题来了，我们上边提到容器是镜像的实例化对象，而镜像本身就是一个虚拟机，如何去修改配置文件和上传 vue 打包的文件。对于修改配置文件 <code>nginx. conf</code>，我们不妨使用命令 <code>docker exec nginx</code> 进入容器内部, 但是当我们使用 vi 编辑器的时候，发现容器内部不支持，我们上边提到过：<span style="background: rgba (140, 140, 140, 0.12)">docker 是一款可以为应用程序进行打包、分发、部署的工具，也可以理解为一个轻量的虚拟机，只需要虚拟机软件运行的环境，多余的一点都不需要</span>，所以便不会存在 vi 了。假如我们本地存在这样一个目录，可以将修改的配置文件和 vue 打包文件同步到容器内部，那么就方便多了。<br>因此，我们需要了解一个新的概念–数据卷，<strong>它是一个虚拟目录，是容器内目录与宿主机目录之间映射的桥梁</strong>。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171535015.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171535015.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+</tbody>
+</table>
+</details>
+<p>这里有一个技巧，命令的具体细节我们可以不记忆，可以通过 --help 指令来查看它的用法，比如 docker rm 删除容器，我们可以通过 <code>docker rm --help</code> 来查看他的具体用法：</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171517962.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171517962.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
+<p>从终端的命令我们可看到 <code>docker rm -f 容器名称</code> 就是删除掉一个运行中的容器。通过这种方法我们便可以不用在记忆这么多繁琐的命令，只知道具体的命令关键字即可。通过上边的学习，我们便可以拉取、删除、运行、查看镜像了。</p>
+<h2 id="四、容器目录挂载的方式">四、容器目录挂载的方式</h2>
+<p>通过上边的学习我们可以通过 docker 拉取远程镜像来部署我们的应用，现在有这样一个需求，用 nginx 部署一个 vue 项目，我们首先做的是拉取 nginx 镜像，接着配置 <code>nginx. conf</code> 文件，然后将 vue 打包的应用上传到 nginx 上。那么，问题来了，我们上边提到容器是镜像的实例化对象，而镜像本身就是一个虚拟机，如何去修改配置文件和上传 vue 打包的文件。对于修改配置文件 <code>nginx. conf</code>，我们不妨使用命令 <code>docker exec nginx</code> 进入容器内部, 但是当我们使用 vi 编辑器的时候，发现容器内部不支持，我们上边提到过：<span style="background: rgba (140, 140, 140, 0.12)">docker 是一款可以为应用程序进行打包、分发、部署的工具，也可以理解为一个轻量的虚拟机，只需要虚拟机软件运行的环境，多余的一点都不需要</span>，所以便不会存在 vi 了。假如我们本地存在这样一个目录，可以将修改的配置文件和 vue 打包文件同步到容器内部，那么就方便多了。因此，我们需要了解一个新的概念–数据卷，<strong>它是一个虚拟目录，是容器内目录与宿主机目录之间映射的桥梁</strong>。</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171535015.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171535015.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>关于数据卷的详细命令，直接通过帮助指令在终端自行查看，这里只提供常用指令。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171540568.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171540568.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171540568.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171540568.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume --help // 查看其他数据卷指令</span><br></pre></td></tr></table></figure>
-
 <p>下边我将介绍三种目录挂载的方式：</p>
-<h3 id="1、volume-方式"><a href="#1、volume-方式" class="headerlink" title="1、volume 方式"></a>1、volume 方式</h3><p>由容器创建和管理，创建在宿主机上，所以删除容器不会丢失，官方推荐，更高效，Linux 文件系统，适合存储数据库数据，可以挂载多个容器。<br><strong>当我们在创建并运行镜像的时候，可通过语法</strong> <code>-v 数据卷名称(自定义):容器内目录</code> <strong>来挂载目录，容器创建的时候，如果发现挂载的数据卷不存在时，就会自动创建数据卷</strong>。</p>
+<h3 id="1、volume-方式">1、volume 方式</h3>
+<p>由容器创建和管理，创建在宿主机上，所以删除容器不会丢失，官方推荐，更高效，Linux 文件系统，适合存储数据库数据，可以挂载多个容器。<br>
+<strong>当我们在创建并运行镜像的时候，可通过语法</strong> <code>-v 数据卷名称(自定义):容器内目录</code> <strong>来挂载目录，容器创建的时候，如果发现挂载的数据卷不存在时，就会自动创建数据卷</strong>。</p>
 <figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -d --name nginx -p 80:80 -v html:/usr/share/nginx/html nginx</span></span><br></pre></td></tr></table></figure>
-
 <p>我们在终端查看发现目录 html 挂载成功了。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171555555.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171555555.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171555555.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171555555.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>其实，这个 html 目录位于你本地 docker 安装目录下的 volumes 目录内，比如 mac 上是这样的，orbstack 是 mac 电脑上一种内含 dockerde 轻量化软件，不必深究这个目录，只需要找到你的 docker 安装目录即可。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171556716.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171556716.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<h3 id="2、bind-Mount-方式"><a href="#2、bind-Mount-方式" class="headerlink" title="2、bind Mount 方式"></a>2、bind Mount 方式</h3><p>直接把宿主机的物理目录映射到容器内，适合挂载代码目录和配置文件。而且是一种双向绑定，宿主机和容器内的内容都是同步的，也可以挂载到多个容器上。<br>现在有这样一个需求：</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171556716.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171556716.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
+<h3 id="2、bind-Mount-方式">2、bind Mount 方式</h3>
+<p>直接把宿主机的物理目录映射到容器内，适合挂载代码目录和配置文件。而且是一种双向绑定，宿主机和容器内的内容都是同步的，也可以挂载到多个容器上。现在有这样一个需求：</p>
 <blockquote>
-<p>查看 mysql 容器，判断是否有数据卷挂载，基于宿主机目录实现 MySQL 数据目录、配置文件、初始化脚本的挂载（查阅官方镜像文档）<br>①挂载&#x2F;root&#x2F;mysql&#x2F;data到容器内的&#x2F;var&#x2F;lib&#x2F;mysql目录<br>②挂载&#x2F;root&#x2F;mysql&#x2F;init 到容器内的&#x2F;docker-entrypoint-initdb.d 目录<br>③挂载&#x2F;root&#x2F;mysql&#x2F;conf 到容器内的&#x2F;etc&#x2F;mysql&#x2F;conf. d 目录</p>
+<p>查看 mysql 容器，判断是否有数据卷挂载，基于宿主机目录实现 MySQL 数据目录、配置文件、初始化脚本的挂载（查阅官方镜像文档）<br>
+①挂载/root/mysql/data到容器内的/var/lib/mysql目录<br>
+②挂载/root/mysql/init 到容器内的/docker-entrypoint-initdb.d 目录<br>
+③挂载/root/mysql/conf 到容器内的/etc/mysql/conf. d 目录</p>
 </blockquote>
 <p>对于以上需求，我们可以使用 volume 方式挂载，但是由于涉及的配置文件过多，我们难免在各个过程都需要修改，需要保持本地配置文件和容器内的配置一致，<strong>尤为重要的一点是当我们用 volume 的挂载删除容器时，虽然挂载的目录还在，但是当再次运行容器时，挂载的目录名称变了，上次的数据就会丢失，数据便没有迁移过来</strong> ，因此，我们便选用 bind mount 进行绑定。具体语法如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-v 本地目录 : 容器内目录</span><br></pre></td></tr></table></figure>
-<p>在运行 <code>docker run</code> 命令的时候，便可以将这条命令加入到后边。<br>具体执行如下：</p>
+<p>在运行 <code>docker run</code> 命令的时候，便可以将这条命令加入到后边。具体执行如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \                                              --name mysql \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-e TZ=Asia/Shanghai \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123 \</span><br><span class="line">-v /Users/username/code/dockerApp/mysql/data:/var/lib/mysql \</span><br><span class="line">-v /Users/username/code/dockerApp/mysql/init:/docker-entrypoint-initdb.d \</span><br><span class="line">-v /Users/username/code/dockerApp/mysql/conf:/etc/mysql/conf.d \</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
 <p>由于命令太长，这里使用了 <code>\</code> 将命令进行分割。在终端运行以上命令，如下图：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171626806.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171626806.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171626806.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171626806.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>我们使用 <code>docker inspect mysql</code> 命令来查看容器的详细信息，这里只截取了挂载目录的信息，如下图：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171642975.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171642975.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171642975.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171642975.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>从上图发现已经主机目录已经和容器目录映射成功了！</p>
-<h3 id="3、tmpfs-Mount"><a href="#3、tmpfs-Mount" class="headerlink" title="3、tmpfs Mount"></a>3、tmpfs Mount</h3><p>适合存储零食文件，存储在宿主机内存中，不可多容器共享。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171645640.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171645640.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<h3 id="3、tmpfs-Mount">3、tmpfs Mount</h3>
+<p>适合存储临时文件，存储在宿主机内存中，不可多容器共享。</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171645640.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171645640.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>以上就是我们常见的三种目录挂载方式，核心掌握前两种方法。</p>
-<h2 id="五、自定义镜像"><a href="#五、自定义镜像" class="headerlink" title="五、自定义镜像"></a>五、自定义镜像</h2><p>通过以上的学习，我们可以通过别人制作好的镜像去部署一个应用了，但是我们如果要制作属于自己的镜像该怎么做？下边我们将通过一个例子来讲述如何制作一个镜像。<br>镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171654135.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171654135.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<h2 id="五、自定义镜像">五、自定义镜像</h2>
+<p>通过以上的学习，我们可以通过别人制作好的镜像去部署一个应用了，但是我们如果要制作属于自己的镜像该怎么做？下边我们将通过一个例子来讲述如何制作一个镜像。镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171654135.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171654135.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>每一个镜像结构都是根据其依赖关系的层级关系或者说是依赖范围大小分层的，分别有基础镜像，中间的每一层，入口层。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171656879.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171656879.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171656879.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171656879.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>关于这些层之间的结构 docker 提供了一个描述文件 <strong>Dockfile</strong> ，它会说明每一层具体要执行哪些操作，帮我们自动构建镜像，常见指令如下：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171701510.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171701510.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171701510.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171701510.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <hr>
 <p>具体指令的详细描述如下 (可以略过)：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// FROM 指令</span><br><span class="line">FROM &lt;IMAGE&gt;</span><br><span class="line">FROM &lt;IMAGE&gt;:&lt;TAG&gt;</span><br></pre></td></tr></table></figure>
@@ -2908,35 +2856,40 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>使用这个指令的目的是告诉应用程序容器内应用程序会使用的端口，在运行时还需要使用 -p 参数指定映射端口。这是 docker 处于安全的目的，不会自动打开端口。</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80 -d dockertest/dockerfile_build nginx -g &quot;daemon off&quot;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// CMD 指令</span><br><span class="line">// 用于提供容器运行的默认命令 如果在 docker run 时指定了运行的命令，则 CMD 命令不会执行。CMD有如下三种模式：</span><br><span class="line">CMD &lt;command&gt; (shell 模式)</span><br><span class="line">CMD [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] (exec模式)</span><br><span class="line">CMD [&quot;param1&quot;, &quot;param2&quot;] (通常与ENTRYPOINT 搭配指定ENTRYPOINT 的默认参数)</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// ADD 和 COPY</span><br><span class="line">作用都是将文件或目录复制到 Dockerfile 构建的镜像中</span><br><span class="line">ADD &lt;src&gt; &lt;dest&gt;</span><br><span class="line">ADD [&quot;&lt;src&gt;&quot; &quot;&lt;dest&gt;&quot;] (适用与文件路径包含空格的情况)</span><br><span class="line"></span><br><span class="line">COPY &lt;src&gt; &lt;dest&gt;</span><br><span class="line">ADD [&quot;&lt;src&gt;&quot; &quot;&lt;dest&gt;&quot;] （适用于文件路径包含空格的情况）</span><br></pre></td></tr></table></figure>
-<ul>
-<li>build 为镜像（安装包）和运行<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t repository(package name):tag .</span><br></pre></td></tr></table></figure></li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>build 为镜像（安装包）和运行</p>
+</li>
 </ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t repository(package name):tag .</span><br></pre></td></tr></table></figure>
 <hr>
 <p>我们可以基于 Ubuntu 基础镜像，利用 Dockerfile 描述镜像结构，</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171712337.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171712337.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171712337.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171712337.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>但是这样有点麻烦，我们可以基于 Ubuntu 基础镜像，利用 Dockerfile 描述镜像结构，直接基于 JDK 为基础镜像，省略前面的步骤。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171733008.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171733008.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171733008.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171733008.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>当我们便写好了 Dockefile 文件后，可以直接使用一下命令来构建镜像：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t 镜像名称 .</span><br></pre></td></tr></table></figure>
-<p><code>-t</code> ：是给镜像起名，格式依然是 repository: tag 的格式，不指定 tag 时，默认为 latest<br><code>.</code> ：是指定 Dockerfile 所在目录，如果就在当前目录, 则指定为 <code>.</code>。</p>
-<h2 id="六、网络（多容器通信）"><a href="#六、网络（多容器通信）" class="headerlink" title="六、网络（多容器通信）"></a>六、网络（多容器通信）</h2><p>对于前后端分离的应用，我们单独部署的时候需要配置跨域，而且每个应用都是一个单独的容器，默认情况下，所有容器都是以 bridge 方式连接到 Docker 的一个虚拟网桥上：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171734642.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171734642.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<p>但是如果重新启动容器后，IP 地址就会发生变化，我们又得在配置文件中修改配置，如果能把变化的 IP 地址用一个变量代替了，这样即使重启应用后，我们在也不需要修改 IP 地址了，而这个变量就是容器名称，但是默认情况下是不能通过容器名互相访问的，这时候我们需要通过自定义网络，让它们加入同一个网络，便可以使用容器名互相访问了！<br>Docker 网络操作命令如下：</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171741146.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171741146.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><code>-t</code> ：是给镜像起名，格式依然是 repository: tag 的格式，不指定 tag 时，默认为 latest<br>
+<code>.</code> ：是指定 Dockerfile 所在目录，如果就在当前目录, 则指定为 <code>.</code>。</p>
+<h2 id="六、网络（多容器通信）">六、网络（多容器通信）</h2>
+<p>对于前后端分离的应用，我们单独部署的时候需要配置跨域，而且每个应用都是一个单独的容器，默认情况下，所有容器都是以 bridge 方式连接到 Docker 的一个虚拟网桥上：</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171734642.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171734642.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
+<p>但是如果重新启动容器后，IP 地址就会发生变化，我们又得在配置文件中修改配置，如果能把变化的 IP 地址用一个变量代替了，这样即使重启应用后，我们在也不需要修改 IP 地址了，而这个变量就是容器名称，但是默认情况下是不能通过容器名互相访问的，这时候我们需要通过自定义网络，让它们加入同一个网络，便可以使用容器名互相访问了！<br>
+Docker 网络操作命令如下：</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171741146.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171741146.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>也可以在容器运行的时候创建网络，具体示例操作如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redis --netowrk test-net --network-alias redis redis:latest</span><br></pre></td></tr></table></figure>
-
-<h2 id="七、docker-compose"><a href="#七、docker-compose" class="headerlink" title="七、docker-compose"></a>七、docker-compose</h2><p>通过上边的讲述，我们可以将一个项目中涉及的环境进行部署，但是这样的方式只能一个容器一个容器的单独部署运行，如果项目中涉及的容器比较多，效率就会很低，因此 docker 提供了一个工具 docker- compose。Docker Compose 通过一个单独的 <code>docker-compose. yml </code> <strong>模板文件（YAML 格式）来定义一组相关联的应用容器，帮助我们实现多个相互关联的 Docker 容器的快速部署</strong>。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171751153.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171751153.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<h2 id="七、docker-compose">七、docker-compose</h2>
+<p>通过上边的讲述，我们可以将一个项目中涉及的环境进行部署，但是这样的方式只能一个容器一个容器的单独部署运行，如果项目中涉及的容器比较多，效率就会很低，因此 docker 提供了一个工具 docker- compose。Docker Compose 通过一个单独的 <code>docker-compose. yml </code> <strong>模板文件（YAML 格式）来定义一组相关联的应用容器，帮助我们实现多个相互关联的 Docker 容器的快速部署</strong>。</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171751153.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171751153.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>事实上，Dockerfile 描述文件中的指令和 <code>docker-compose. yml</code> 配置文件的内容是对应的。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171814040.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171814040.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171814040.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171814040.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>当我们配置好了 <code>docker-compose. yml </code> 文件后，直接运行 <code>docker compose [OPTIONS] [COMMAND]</code> 命令部署并运行所有容器。</p>
-<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171759761.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171759761.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上述内容可以帮助我们处理日常开发过程中碰到的部署问题，对于不是专业的运维工作人员而言，已经足够了。有了 docker 后，我们在部署应用，分享自己的软件的时候，再也不会因为计算机系统、环境冲突而引起的问题苦恼了，这么好的工具我们有什么理由不学习使用呢？</p>
+<p><img src="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171759761.png" class="lazyload" data-srcset="https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171759761.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
+<h2 id="总结">总结</h2>
+<p>上述内容可以帮助我们处理日常开发过程中碰到的部署问题，对于不是专业的运维工作人员而言，已经足够了。有了 docker 后，我们在部署应用，分享自己的软件的时候，再也不会因为计算机系统、环境冲突而引起的问题苦恼了，这么好的工具我们有什么理由不学习使用呢？</p>
 
   </div>
   
@@ -2967,7 +2920,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               <div class="license-meta-item">
                 <div class="license-meta-title">更新于</div>
-                <div class="license-meta-text">2024年1月18日</div>
+                <div class="license-meta-text">2024年2月15日</div>
               </div>
               
               
@@ -3002,10 +2955,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-18T09:37:56+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-02-15T21:46:45+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年1月18日</p>
+    <p>更新于：2024年2月15日</p>
   </a>
 </div>
 
@@ -3096,10 +3049,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='next' href='/2023/10/18/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%8F%91%E5%B1%95%E5%8F%B2/'>
           <p class='title'>浅谈前端发展史<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>一、前端的发展历史石器时代：
+          <p class='content'>一、前端的发展历史
+石器时代：
+
 
 1990 年，第一个 Web 浏览器诞生了。这是前端这个技术的起点，代表这一年它出生了。后面的时间里，前端圈有很多里程碑事件。
-1994 年，网景公司发布第一个商...</p>
+
+
+1994 年，网景公司发布...</p>
         </a>
       
     </div>
@@ -3259,7 +3216,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
       
         本站使用
-        <a href="https://github.com/volantis-x/hexo-theme-volantis/#5.7.7" target="_blank" class="codename">Volantis</a>
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1" target="_blank" class="codename">Volantis</a>
         作为主题
       
     
@@ -3932,7 +3889,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
   function loadSearchScript() {
     // see: layout/_partial/scripts/_ctrl/cdnCtrl.ejs
-    return volantis.js("/js/search/hexo.js");
+    return volantis.js("js/search/hexo.js");
   }
 
   function loadSearchService() {
@@ -4007,12 +3964,14 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016215.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015087.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016479.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152020332.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018248.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152014748.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016249.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019170.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019455.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152017365.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018512.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015153.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp"];
   let index = 0;
   let IntervalParallax = null;
 
   function parallax(){
     let ParallaxWindow = document.querySelector("#parallax-window");
+    
+      ParallaxWindow = document.querySelector("html");
     
     Parallax.window = ParallaxWindow;
     Parallax.options.fade = 1500;
@@ -4022,7 +3981,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (imgs.length>1) {
       IntervalParallax = setInterval(function () {
         next_parallax();
-      }, '60000');
+      }, '10000');
     }
   }
 
@@ -4030,10 +3989,6 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (typeof Parallax == "undefined") {
       return
     }
-    
-      if (!document.querySelector("#full")&&!document.querySelector("#half")) {
-        return
-      }
     
     if (imgs.length>=1) {
       Parallax.options.src = imgs[index % imgs.length];
@@ -4236,7 +4191,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/运维/","name":"运维"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2024/01/17/docker/","name":"基础篇：容器化部署技术-—docker，从此摆脱多环境配置的苦恼！"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"基础篇：容器化部署技术-—docker，从此摆脱多环境配置的苦恼！","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2024/01/17/docker/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2024/01/17/docker/","wordCount":0,"datePublished":"2024-01-17T10:05:00.000Z","dateModified":"2024-01-18T01:37:56.146Z","articleSection":"运维","keywords":"docker,容器化部署技术","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/运维/","name":"运维"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2024/01/17/docker/","name":"基础篇：容器化部署技术-—docker，从此摆脱多环境配置的苦恼！"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"基础篇：容器化部署技术-—docker，从此摆脱多环境配置的苦恼！","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2024/01/17/docker/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2024/01/17/docker/","wordCount":0,"datePublished":"2024-01-17T10:05:00.000Z","dateModified":"2024-02-15T13:46:45.505Z","articleSection":"运维","keywords":"docker,容器化部署技术","image":{"@type":"ImageObject","url":"https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202401171141746.png","width":1024,"height":768}}]</script>
 
 
 
@@ -4320,5 +4275,11 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     <!-- Custom Files bodyEnd begin-->
     
     <!-- Custom Files bodyEnd end-->
+    <!-- front-matter body_end begin -->
+    <!-- front-matter body_end end -->
+    <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/sakura.js"></script>
+    <!-- <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/mouse_slide.js"></script> -->
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/clicksocialist.js"></script>
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"right","width":210,"height":360},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
 </html>

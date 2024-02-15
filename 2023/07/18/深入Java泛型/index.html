@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#5.7.7'>
+    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
   <meta name="generator" content="Hexo 6.3.0">
-  <meta name="Volantis" content="5.7.7">
+  <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
@@ -23,8 +23,21 @@
   <!-- import head_begin begin -->
   <!-- import head_begin end -->
   <!-- Custom Files headBegin begin-->
+  <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+	<link rel="stylesheet" href="./custom/darkmode.css" defer/>
+  </head>
+  <body itemscope itemtype="http://schema.org/WebPage">
   
+    <script src="./custom/darkmode.js" defer></script>
+    <script src="./custom/subtitle.js" defer></script>
+  </body>
+</html>
+
   <!-- Custom Files headBegin end-->
+  <!-- front-matter head_begin begin -->
+  <!-- front-matter head_begin end -->
   <link rel="preload" href="/css/style.css" as="style">
   <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/VarelaRound/VarelaRound-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/UbuntuMono/UbuntuMono-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -39,11 +52,11 @@
 <meta property="og:title" content="深入Java泛型">
 <meta property="og:url" content="https://wenjing-xin.github.io/2023/07/18/%E6%B7%B1%E5%85%A5Java%E6%B3%9B%E5%9E%8B/index.html">
 <meta property="og:site_name" content="dreamChaser">
-<meta property="og:description" content="一、什么是 Java 的泛型？Java的泛型是 jdk1.5 引入的一个新特性，其特点就是将类型进行一个参数化，把类型作为参数传递。一些常见的泛型类型有：  E 元素（Element），多用于 Java集合框架K 关键字（key）V 值（value）T 类型（Type）N 数字（Number）  语法： 1&lt;T,...&gt; &#x2F;&#x2F;T称为类型占位符，表示一种引用类型 好处：  提高代码的重用">
+<meta property="og:description" content="一、什么是 Java 的泛型？ Java的泛型是 jdk1.5 引入的一个新特性，其特点就是将类型进行一个参数化，把类型作为参数传递。一些常见的泛型类型有：  E 元素（Element），多用于 Java集合框架 K 关键字（key） V 值（value） T 类型（Type） N 数字（Number）  语法： 1&lt;T,...&gt; &#x2F;&#x2F;T称为类型占位符，表示一种引用类型 好处：   提">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-07-18T12:03:00.000Z">
-<meta property="article:modified_time" content="2023-07-17T12:07:35.674Z">
+<meta property="article:modified_time" content="2024-02-15T15:46:54.062Z">
 <meta property="article:author" content="稳静逐梦">
 <meta property="article:tag" content="JavaSE">
 <meta name="twitter:card" content="summary">
@@ -56,7 +69,7 @@
 :root {
   --color-site-body: #f4f4f4;
   --color-site-bg: #f4f4f4;
-  --color-site-inner: #303133;
+  --color-site-inner: #000;
   --color-site-footer: #409eff;
   --color-card: #fff;
   --color-text: #444;
@@ -75,7 +88,7 @@
   --color-meta: #888;
   --color-read-bkg: #e0d8c8;
   --color-read-post: #f8f1e2;
-  --color-copyright-bkg: #f5f5f5;
+  --color-copyright-bkg: ;
 }
 * {
   box-sizing: border-box;
@@ -116,13 +129,13 @@ html >::-webkit-scrollbar-track-piece {
   background: transparent;
 }
 html >::-webkit-scrollbar-thumb {
-  background: #44d7b6;
+  background: ;
   cursor: pointer;
   border-radius: 2px;
   -webkit-border-radius: 2px;
 }
 html >::-webkit-scrollbar-thumb:hover {
-  background: #ff5722;
+  background: ;
 }
 body {
   background-color: var(--color-site-body);
@@ -617,122 +630,6 @@ button {
   -moz-opacity: 1;
   border-bottom: 2px solid var(--color-site-inner);
 }
-.cover-wrapper.dock .menu,
-.cover-wrapper.featured .menu,
-.cover-wrapper.focus .menu {
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-.cover-wrapper.dock .menu .list-h a,
-.cover-wrapper.featured .menu .list-h a,
-.cover-wrapper.focus .menu .list-h a {
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
-  line-height: 24px;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-bottom: none;
-  text-align: center;
-  align-content: flex-end;
-  color: rgba(68,68,68,0.7);
-  font-size: 1.5rem;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h a,
-  .cover-wrapper.featured .menu .list-h a,
-  .cover-wrapper.focus .menu .list-h a {
-    padding: 12px 8px;
-  }
-}
-.cover-wrapper.dock .menu .list-h a i,
-.cover-wrapper.featured .menu .list-h a i,
-.cover-wrapper.focus .menu .list-h a i {
-  margin: 8px;
-}
-.cover-wrapper.dock .menu .list-h a p,
-.cover-wrapper.featured .menu .list-h a p,
-.cover-wrapper.focus .menu .list-h a p {
-  font-size: 0.875rem;
-}
-.cover-wrapper.dock .menu .list-h a.active,
-.cover-wrapper.featured .menu .list-h a.active,
-.cover-wrapper.focus .menu .list-h a.active {
-  background: var(--color-card);
-  backdrop-filter: none;
-}
-.cover-wrapper.dock .menu .list-h a.active i,
-.cover-wrapper.featured .menu .list-h a.active i,
-.cover-wrapper.focus .menu .list-h a.active i,
-.cover-wrapper.dock .menu .list-h a.active i+p,
-.cover-wrapper.featured .menu .list-h a.active i+p,
-.cover-wrapper.focus .menu .list-h a.active i+p {
-  color: #44d7b6;
-}
-.cover-wrapper.dock .menu .list-h a.active img+p,
-.cover-wrapper.featured .menu .list-h a.active img+p,
-.cover-wrapper.focus .menu .list-h a.active img+p {
-  color: var(--color-text);
-}
-.cover-wrapper.dock .menu .list-h a:hover,
-.cover-wrapper.featured .menu .list-h a:hover,
-.cover-wrapper.focus .menu .list-h a:hover {
-  background: var(--color-card);
-}
-.cover-wrapper.dock .top {
-  margin-bottom: 48px;
-}
-.cover-wrapper.dock .menu {
-  background: rgba(255,255,255,0.5);
-  position: absolute;
-  bottom: 0;
-  max-width: 100%;
-}
-.cover-wrapper.dock .menu .list-h {
-  flex-wrap: nowrap;
-  -webkit-flex-wrap: nowrap;
-  -khtml-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -o-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  margin: 4px;
-}
-.cover-wrapper.dock .menu .list-h a+a {
-  margin-left: 4px;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h {
-    overflow-x: scroll;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-track-piece {
-    background: transparent;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb {
-    background: #44d7b6;
-    cursor: pointer;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb:hover {
-    background: #ff5722;
-  }
-}
-@supports (backdrop-filter: blur(20px)) {
-  .cover-wrapper.dock .menu {
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: saturate(200%) blur(20px);
-  }
-}
 .cover-wrapper #parallax-window {
   position: absolute;
   width: 100%;
@@ -803,7 +700,7 @@ button {
     --color-mode: 'dark';
   }
   :root:not([color-scheme]) {
-    --color-site-body: #121212;
+    --color-site-body: ;
     --color-read-bkg: #222;
     --color-read-post: #444;
     --color-site-bg: #222;
@@ -825,7 +722,7 @@ button {
     --color-list-hl: #69dfc4;
     --color-meta: #888;
     --color-link: #888;
-    --color-copyright-bkg: #21252b;
+    --color-copyright-bkg: ;
   }
   :root:not([color-scheme]) img {
     filter: brightness(70%) !important;
@@ -875,7 +772,7 @@ button {
   }
 }
 [color-scheme='dark'] {
-  --color-site-body: #121212;
+  --color-site-body: ;
   --color-read-bkg: #222;
   --color-read-post: #444;
   --color-site-bg: #222;
@@ -897,7 +794,7 @@ button {
   --color-list-hl: #69dfc4;
   --color-meta: #888;
   --color-link: #888;
-  --color-copyright-bkg: #21252b;
+  --color-copyright-bkg: ;
 }
 [color-scheme='dark'] img {
   filter: brightness(70%) !important;
@@ -1872,9 +1769,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   volantis.GLOBAL_CONFIG ={
     debug: "env",
-    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
+    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1707984893188),
+    lastupdate: new Date(1708012468541),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate","webinfo","music"],
       for_post: ["toc"],
@@ -2298,6 +2195,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd begin-->
   
   <!-- Custom Files headEnd end-->
+  <!-- front-matter head_end begin -->
+  <!-- front-matter head_end end -->
 </head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
@@ -2305,6 +2204,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files bodyBegin begin-->
     
     <!-- Custom Files bodyBegin end-->
+    <!-- front-matter body_begin begin -->
+    <!-- front-matter body_begin end -->
     <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
@@ -2452,7 +2353,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div class="m_search">
         <form name="searchform" class="form u-search-form">
           <i class="icon fa-solid fa-search fa-fw"></i>
-          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词" />
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
         </form>
       </div>
       
@@ -2594,7 +2495,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
-      <div id="half" class='cover-wrapper post dock' style="display: ;">
+      <div id="half" class='cover-wrapper post search' style="display: ;">
         
   <div id="parallax-window"></div>
 
@@ -2602,13 +2503,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class='top'>
     
     
-      <p class="title">我思故而我生</p>
+      <p class="title"><font> <span>我思</span><span>故而</span><span>我生</span></font></p>
     
     
-      <p class="subtitle">岁月了无痕，时光轻染故事尘。百年光景如梦航，笔墨留香绘千行。</p>
+      <p class="subtitle"><div id="binft"></div></p>
     
   </div>
   <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
+          <i class="icon fa-solid fa-search fa-fw"></i>
+        </form>
+      </div>
+    
     <div class='menu navigation'>
       <div class='list-h'>
         
@@ -2617,42 +2526,42 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               
               active-action="action-home">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f4f0.svg'><p>博客</p>
+              <p>博客</p>
             </a>
           
             <a href="/categories"
               
               
               active-action="action-categories">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f396.svg'><p>分类</p>
+              <p>分类</p>
             </a>
           
             <a href="/tags"
               
               
               active-action="action-tags">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f389.svg'><p>标签</p>
+              <p>标签</p>
             </a>
           
             <a href="/archives"
               
               
               active-action="action-archives">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f5c3.svg'><p>归档</p>
+              <p>归档</p>
             </a>
           
             <a href="/friends"
               
               
               active-action="action-friends">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f516.svg'><p>友链</p>
+              <p>友链</p>
             </a>
           
             <a href="/about"
               
               
               active-action="action-about">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f9ec.svg'><p>关于</p>
+              <p>关于</p>
             </a>
           
         
@@ -2759,24 +2668,34 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h2 id="一、什么是-Java-的泛型？"><a href="#一、什么是-Java-的泛型？" class="headerlink" title="一、什么是 Java 的泛型？"></a>一、什么是 Java 的泛型？</h2><p>Java的泛型是 jdk1.5 引入的一个新特性，其特点就是将类型进行一个参数化，把类型作为参数传递。<br>一些常见的泛型类型有：</p>
+    <h2 id="一、什么是-Java-的泛型？">一、什么是 Java 的泛型？</h2>
+<p>Java的泛型是 jdk1.5 引入的一个新特性，其特点就是将类型进行一个参数化，把类型作为参数传递。一些常见的泛型类型有：</p>
 <blockquote>
-<p>E 元素（Element），多用于 Java集合框架<br>K 关键字（key）<br>V 值（value）<br>T 类型（Type）<br>N 数字（Number）</p>
+<p>E 元素（Element），多用于 Java集合框架<br>
+K 关键字（key）<br>
+V 值（value）<br>
+T 类型（Type）<br>
+N 数字（Number）</p>
 </blockquote>
 <p>语法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T,...&gt; <span class="comment">//T称为类型占位符，表示一种引用类型</span></span><br></pre></td></tr></table></figure>
 <p>好处：</p>
 <ol>
-<li>提高代码的重用性</li>
-<li>防止类型转换异常，提高代码的安全性</li>
+<li class="lvl-3">
+<p>提高代码的重用性</p>
+</li>
+<li class="lvl-3">
+<p>防止类型转换异常，提高代码的安全性</p>
+</li>
 </ol>
-<h2 id="二、泛型的常见使用形式"><a href="#二、泛型的常见使用形式" class="headerlink" title="二、泛型的常见使用形式"></a>二、泛型的常见使用形式</h2><h3 id="1、泛型类"><a href="#1、泛型类" class="headerlink" title="1、泛型类"></a>1、泛型类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型类</span></span><br><span class="line"><span class="comment"> * 语法：类名&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * T是类型占位符，表示一种引用类型，如果编写多个使用逗号隔开</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyGeneric</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">//使用泛型T</span></span><br><span class="line">    <span class="comment">//1创建变量</span></span><br><span class="line">    T t;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2作为方法的参数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">show</span><span class="params">(T t)</span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3使用泛型作为方法的返回值</span></span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getT</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="二、泛型的常见使用形式">二、泛型的常见使用形式</h2>
+<h3 id="1、泛型类">1、泛型类</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型类</span></span><br><span class="line"><span class="comment"> * 语法：类名&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * T是类型占位符，表示一种引用类型，如果编写多个使用逗号隔开</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyGeneric</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">//使用泛型T</span></span><br><span class="line">    <span class="comment">//1创建变量</span></span><br><span class="line">    T t;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2作为方法的参数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">show</span><span class="params">(T t)</span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3使用泛型作为方法的返回值</span></span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getT</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestGeneric</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//使用泛型类创建对象</span></span><br><span class="line">        <span class="comment">//注意：1 泛型只能使用引用类型 2 不同泛型对象之间不能相互赋值</span></span><br><span class="line">        MyGeneric&lt;String&gt; myGeneric = <span class="keyword">new</span> <span class="title class_">MyGeneric</span>&lt;&gt;();</span><br><span class="line">        myGeneric.t = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">        myGeneric.show(<span class="string">&quot;字符串泛型&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> myGeneric.getT();</span><br><span class="line">        System.out.println(string);</span><br><span class="line"></span><br><span class="line">        MyGeneric&lt;Integer&gt; myGeneric2 = <span class="keyword">new</span> <span class="title class_">MyGeneric</span>&lt;&gt;();</span><br><span class="line">        myGeneric2.t = <span class="number">1024</span>;</span><br><span class="line">        myGeneric2.show(<span class="number">65536</span>);</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">integer</span> <span class="operator">=</span> myGeneric2.getT();</span><br><span class="line">        System.out.println(integer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>打印结果：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字符串泛型</span><br><span class="line">hello world</span><br><span class="line"><span class="number">65536</span></span><br><span class="line"><span class="number">1024</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="2、泛型接口"><a href="#2、泛型接口" class="headerlink" title="2、泛型接口"></a>2、泛型接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型接口</span></span><br><span class="line"><span class="comment"> * 语法：接口名&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * 注意：不能创建泛型静态常量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MyInterface</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"></span><br><span class="line">    T <span class="title function_">server</span><span class="params">(T t)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2、泛型接口">2、泛型接口</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型接口</span></span><br><span class="line"><span class="comment"> * 语法：接口名&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * 注意：不能创建泛型静态常量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MyInterface</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"></span><br><span class="line">    T <span class="title function_">server</span><span class="params">(T t)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>泛型接口的实现方式一：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyInterfaceImpl</span> <span class="keyword">implements</span> <span class="title class_">MyInterface</span>&lt;String&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">server</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        System.out.println(s);</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>泛型接口的实现方式二：</p>
@@ -2785,16 +2704,25 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestGeneric</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//泛型接口</span></span><br><span class="line">        <span class="type">MyInterfaceImpl</span> <span class="variable">impl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyInterfaceImpl</span>();</span><br><span class="line">        impl.server(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line">        MyInterfaceImpl2&lt;Integer&gt; impl2 = <span class="keyword">new</span> <span class="title class_">MyInterfaceImpl2</span>();</span><br><span class="line">        impl2.server(<span class="number">1024</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>控制台打印结果：</p>
 <blockquote>
-<p>hello world<br>1024</p>
+<p>hello world<br>
+1024</p>
 </blockquote>
-<h3 id="3、泛型方法"><a href="#3、泛型方法" class="headerlink" title="3、泛型方法"></a>3、泛型方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型方法</span></span><br><span class="line"><span class="comment"> * 语法：&lt;T&gt;返回值类型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyGenericMethod</span> &#123;</span><br><span class="line">    <span class="comment">//泛型方法</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; T <span class="title function_">show</span><span class="params">(T t)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;泛型方法&quot;</span> + t);</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="3、泛型方法">3、泛型方法</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 泛型方法</span></span><br><span class="line"><span class="comment"> * 语法：&lt;T&gt;返回值类型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyGenericMethod</span> &#123;</span><br><span class="line">    <span class="comment">//泛型方法</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; T <span class="title function_">show</span><span class="params">(T t)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;泛型方法&quot;</span> + t);</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>调用方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestGeneric</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//泛型方法</span></span><br><span class="line">        <span class="type">MyGenericMethod</span> <span class="variable">myGenericMethod</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyGenericMethod</span>();</span><br><span class="line">        myGenericMethod.show(<span class="string">&quot;我的祖国&quot;</span>);</span><br><span class="line">        myGenericMethod.show(<span class="number">123</span>);</span><br><span class="line">        myGenericMethod.show(<span class="number">3.14</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 控制台打印结果：</span></span><br><span class="line"><span class="comment">* 泛型方法我的祖国</span></span><br><span class="line"><span class="comment">* 泛型方法123</span></span><br><span class="line"><span class="comment">* 泛型方法3.14</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="3、泛型集合"><a href="#3、泛型集合" class="headerlink" title="3、泛型集合"></a>3、泛型集合</h3><p>概念：参数化类型的集合、类型安全的集合，强制集合元素的类型必须一致。<br>优点：</p>
-<ul>
-<li>编译时检查，而非运行时抛出异常。</li>
-<li>访问时，不必类型转换</li>
-<li>不同泛型引用之间不能相互赋值，Java集合中没有</li>
+<h3 id="3、泛型集合">3、泛型集合</h3>
+<p>概念：参数化类型的集合、类型安全的集合，强制集合元素的类型必须一致。优点：</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>编译时检查，而非运行时抛出异常。</p>
+</li>
+<li class="lvl-2">
+<p>访问时，不必类型转换</p>
+</li>
+<li class="lvl-2">
+<p>不同泛型引用之间不能相互赋值，Java集合中没有</p>
+</li>
 </ul>
 <p>示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: wb</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo3</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        ArrayList&lt;String&gt; arrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        arrayList.add(<span class="string">&quot;xxx&quot;</span>);</span><br><span class="line">        arrayList.add(<span class="string">&quot;yyy&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (String s : arrayList) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Student&gt; arrayList2 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Student&gt;();</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;张三&quot;</span>, <span class="number">21</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;里斯&quot;</span>, <span class="number">23</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;王五&quot;</span>, <span class="number">24</span>);</span><br><span class="line">        arrayList2.add(s1);</span><br><span class="line">        arrayList2.add(s2);</span><br><span class="line">        arrayList2.add(s3);</span><br><span class="line">        Iterator&lt;Student&gt; it = arrayList2.iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            <span class="type">Student</span> <span class="variable">next</span> <span class="operator">=</span> it.next();</span><br><span class="line">            System.out.println(next);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 学生类</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> wb</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">   <span class="keyword">private</span> String name;</span><br><span class="line">   <span class="keyword">private</span> String age;</span><br><span class="line">   <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String name, <span class="type">int</span> age)</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.name = name;</span><br><span class="line">       <span class="built_in">this</span>.age = age;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.name =name;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">public</span> Stirng <span class="title function_">getName</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.name;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2828,7 +2756,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               <div class="license-meta-item">
                 <div class="license-meta-title">更新于</div>
-                <div class="license-meta-text">2023年7月17日</div>
+                <div class="license-meta-text">2024年2月15日</div>
               </div>
               
               
@@ -2863,10 +2791,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-07-17T20:07:35+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-02-15T23:46:54+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年7月17日</p>
+    <p>更新于：2024年2月15日</p>
   </a>
 </div>
 
@@ -2956,13 +2884,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='prev' href='/2023/09/10/%E6%99%AE%E9%80%9A%E6%9C%AC%E7%A7%91%E7%9A%84%E5%9B%9B%E5%B9%B4%E5%A4%A7%E5%AD%A6%E6%95%99%E8%82%B2%EF%BC%8C%E7%BB%99%E6%88%91%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F/'>
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>普通本科的四年大学教育，给我带来了什么？</p>
-          <p class='content'>从刚开始踏入校园时的迷茫懵懂，到如今毕业快要离开学校，心境发生了很大变化。这些变化源于成长的每个过程，既有收获的喜悦，也有失去的无奈。大学生活也是充满了很多遗憾，既有爱情必修课的不合格，也有学业...</p>
+          <p class='content'>
+序言
+从刚开始踏入校园时的迷茫懵懂，到如今毕业快要离开学校，心境发生了很大变化。这些变化源于成长的每个过程，既有收获的喜悦，也有失去的无奈。大学生活也是充满了很多遗憾，既有爱情必修课的不合格，...</p>
         </a>
       
       
         <a class='next' href='/2023/07/17/%E6%88%96%E8%AE%B8%E4%B8%96%E4%BA%BA%E9%81%93%E4%BD%A0%E8%BD%BB%E7%8B%82%EF%BC%8C%E5%8F%AF%E4%BD%A0%E6%9C%AC%E5%B0%B1%E5%B9%B4%E5%B0%91%E5%95%8A%EF%BC%81/'>
           <p class='title'>或许世人道你轻狂，可你本就年少啊！<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>作为年轻的00后，看护好我们自己的激情更理想，的确很重要，因为我们知道终将有一天都会消磨。我们或许太早看到过自己不曾到达的世界，这或许是一种幸福，也或许是一种悲哀。
+          <p class='content'>作为年轻的00后，看护好我们自己的激情更理想，的确很重要，因为我们知道终将有一天都会消磨。
+我们或许太早看到过自己不曾到达的世界，这或许是一种幸福，也或许是一种悲哀。
 </p>
         </a>
       
@@ -3123,7 +3054,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
       
         本站使用
-        <a href="https://github.com/volantis-x/hexo-theme-volantis/#5.7.7" target="_blank" class="codename">Volantis</a>
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1" target="_blank" class="codename">Volantis</a>
         作为主题
       
     
@@ -3796,7 +3727,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
   function loadSearchScript() {
     // see: layout/_partial/scripts/_ctrl/cdnCtrl.ejs
-    return volantis.js("/js/search/hexo.js");
+    return volantis.js("js/search/hexo.js");
   }
 
   function loadSearchService() {
@@ -3871,12 +3802,14 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016215.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015087.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016479.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152020332.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018248.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152014748.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016249.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019170.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019455.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152017365.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018512.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015153.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp"];
   let index = 0;
   let IntervalParallax = null;
 
   function parallax(){
     let ParallaxWindow = document.querySelector("#parallax-window");
+    
+      ParallaxWindow = document.querySelector("html");
     
     Parallax.window = ParallaxWindow;
     Parallax.options.fade = 1500;
@@ -3886,7 +3819,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (imgs.length>1) {
       IntervalParallax = setInterval(function () {
         next_parallax();
-      }, '60000');
+      }, '10000');
     }
   }
 
@@ -3894,10 +3827,6 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (typeof Parallax == "undefined") {
       return
     }
-    
-      if (!document.querySelector("#full")&&!document.querySelector("#half")) {
-        return
-      }
     
     if (imgs.length>=1) {
       Parallax.options.src = imgs[index % imgs.length];
@@ -4100,7 +4029,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/Java/","name":"Java"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/07/18/深入Java泛型/","name":"深入Java泛型"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入Java泛型","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/07/18/%E6%B7%B1%E5%85%A5Java%E6%B3%9B%E5%9E%8B/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/07/18/%E6%B7%B1%E5%85%A5Java%E6%B3%9B%E5%9E%8B/","wordCount":0,"datePublished":"2023-07-18T12:03:00.000Z","dateModified":"2023-07-17T12:07:35.674Z","articleSection":"Java","keywords":"JavaSE","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/Java/","name":"Java"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/07/18/深入Java泛型/","name":"深入Java泛型"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入Java泛型","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/07/18/%E6%B7%B1%E5%85%A5Java%E6%B3%9B%E5%9E%8B/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/07/18/%E6%B7%B1%E5%85%A5Java%E6%B3%9B%E5%9E%8B/","wordCount":0,"datePublished":"2023-07-18T12:03:00.000Z","dateModified":"2024-02-15T15:46:54.062Z","articleSection":"Java","keywords":"JavaSE","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
@@ -4184,5 +4113,11 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     <!-- Custom Files bodyEnd begin-->
     
     <!-- Custom Files bodyEnd end-->
+    <!-- front-matter body_end begin -->
+    <!-- front-matter body_end end -->
+    <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/sakura.js"></script>
+    <!-- <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/mouse_slide.js"></script> -->
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/clicksocialist.js"></script>
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"right","width":210,"height":360},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
 </html>

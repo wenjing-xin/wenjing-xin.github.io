@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#5.7.7'>
+    <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
   <meta name="generator" content="Hexo 6.3.0">
-  <meta name="Volantis" content="5.7.7">
+  <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://wenjing-xin.github.io/2023/04/10/obsidian-教程/"/>
+  <link rel="canonical" href="https://wenjing-xin.github.io/2023/04/10/程序的本质：代码是如何被执行的/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -23,8 +23,21 @@
   <!-- import head_begin begin -->
   <!-- import head_begin end -->
   <!-- Custom Files headBegin begin-->
+  <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+	<link rel="stylesheet" href="./custom/darkmode.css" defer/>
+  </head>
+  <body itemscope itemtype="http://schema.org/WebPage">
   
+    <script src="./custom/darkmode.js" defer></script>
+    <script src="./custom/subtitle.js" defer></script>
+  </body>
+</html>
+
   <!-- Custom Files headBegin end-->
+  <!-- front-matter head_begin begin -->
+  <!-- front-matter head_begin end -->
   <link rel="preload" href="/css/style.css" as="style">
   <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/VarelaRound/VarelaRound-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1654736714924/media/fonts/UbuntuMono/UbuntuMono-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -37,13 +50,13 @@
   
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序的本质：代码是如何被执行的">
-<meta property="og:url" content="https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:url" content="https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/index.html">
 <meta property="og:site_name" content="dreamChaser">
-<meta property="og:description" content="一、解释型、编译型、混合型语言要回答上述问题，我们要从最基础的讲起。 我们知道，CPU只认识机器指令（也叫做CPU指令、机器码），用像Python、C++、Java这样的高级语言编写的代码，需要编译（编译的意思实际上就是“翻译”）为机器指令之后，才能被CPU执行。而不同类型的语言，其编译过程也是不同的，据此我们将其分为三类。 1 ）编译型语言对于类似C++这样的编译型语言，代码会事先被编译成机器指">
+<meta property="og:description" content="一、解释型、编译型、混合型语言 要回答上述问题，我们要从最基础的讲起。 我们知道，CPU只认识机器指令（也叫做CPU指令、机器码），用像Python、C++、Java这样的高级语言编写的代码，需要编译（编译的意思实际上就是“翻译”）为机器指令之后，才能被CPU执行。而不同类型的语言，其编译过程也是不同的，据此我们将其分为三类。 1 ）编译型语言 对于类似C++这样的编译型语言，代码会事先被编译成机">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-04-10T06:14:00.000Z">
-<meta property="article:modified_time" content="2024-01-18T00:56:18.986Z">
+<meta property="article:modified_time" content="2024-02-15T15:40:41.110Z">
 <meta property="article:author" content="稳静逐梦">
 <meta property="article:tag" content="CS">
 <meta name="twitter:card" content="summary">
@@ -56,7 +69,7 @@
 :root {
   --color-site-body: #f4f4f4;
   --color-site-bg: #f4f4f4;
-  --color-site-inner: #303133;
+  --color-site-inner: #000;
   --color-site-footer: #409eff;
   --color-card: #fff;
   --color-text: #444;
@@ -75,7 +88,7 @@
   --color-meta: #888;
   --color-read-bkg: #e0d8c8;
   --color-read-post: #f8f1e2;
-  --color-copyright-bkg: #f5f5f5;
+  --color-copyright-bkg: ;
 }
 * {
   box-sizing: border-box;
@@ -116,13 +129,13 @@ html >::-webkit-scrollbar-track-piece {
   background: transparent;
 }
 html >::-webkit-scrollbar-thumb {
-  background: #44d7b6;
+  background: ;
   cursor: pointer;
   border-radius: 2px;
   -webkit-border-radius: 2px;
 }
 html >::-webkit-scrollbar-thumb:hover {
-  background: #ff5722;
+  background: ;
 }
 body {
   background-color: var(--color-site-body);
@@ -617,122 +630,6 @@ button {
   -moz-opacity: 1;
   border-bottom: 2px solid var(--color-site-inner);
 }
-.cover-wrapper.dock .menu,
-.cover-wrapper.featured .menu,
-.cover-wrapper.focus .menu {
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-.cover-wrapper.dock .menu .list-h a,
-.cover-wrapper.featured .menu .list-h a,
-.cover-wrapper.focus .menu .list-h a {
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
-  line-height: 24px;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-bottom: none;
-  text-align: center;
-  align-content: flex-end;
-  color: rgba(68,68,68,0.7);
-  font-size: 1.5rem;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h a,
-  .cover-wrapper.featured .menu .list-h a,
-  .cover-wrapper.focus .menu .list-h a {
-    padding: 12px 8px;
-  }
-}
-.cover-wrapper.dock .menu .list-h a i,
-.cover-wrapper.featured .menu .list-h a i,
-.cover-wrapper.focus .menu .list-h a i {
-  margin: 8px;
-}
-.cover-wrapper.dock .menu .list-h a p,
-.cover-wrapper.featured .menu .list-h a p,
-.cover-wrapper.focus .menu .list-h a p {
-  font-size: 0.875rem;
-}
-.cover-wrapper.dock .menu .list-h a.active,
-.cover-wrapper.featured .menu .list-h a.active,
-.cover-wrapper.focus .menu .list-h a.active {
-  background: var(--color-card);
-  backdrop-filter: none;
-}
-.cover-wrapper.dock .menu .list-h a.active i,
-.cover-wrapper.featured .menu .list-h a.active i,
-.cover-wrapper.focus .menu .list-h a.active i,
-.cover-wrapper.dock .menu .list-h a.active i+p,
-.cover-wrapper.featured .menu .list-h a.active i+p,
-.cover-wrapper.focus .menu .list-h a.active i+p {
-  color: #44d7b6;
-}
-.cover-wrapper.dock .menu .list-h a.active img+p,
-.cover-wrapper.featured .menu .list-h a.active img+p,
-.cover-wrapper.focus .menu .list-h a.active img+p {
-  color: var(--color-text);
-}
-.cover-wrapper.dock .menu .list-h a:hover,
-.cover-wrapper.featured .menu .list-h a:hover,
-.cover-wrapper.focus .menu .list-h a:hover {
-  background: var(--color-card);
-}
-.cover-wrapper.dock .top {
-  margin-bottom: 48px;
-}
-.cover-wrapper.dock .menu {
-  background: rgba(255,255,255,0.5);
-  position: absolute;
-  bottom: 0;
-  max-width: 100%;
-}
-.cover-wrapper.dock .menu .list-h {
-  flex-wrap: nowrap;
-  -webkit-flex-wrap: nowrap;
-  -khtml-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -o-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  margin: 4px;
-}
-.cover-wrapper.dock .menu .list-h a+a {
-  margin-left: 4px;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h {
-    overflow-x: scroll;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-track-piece {
-    background: transparent;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb {
-    background: #44d7b6;
-    cursor: pointer;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb:hover {
-    background: #ff5722;
-  }
-}
-@supports (backdrop-filter: blur(20px)) {
-  .cover-wrapper.dock .menu {
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: saturate(200%) blur(20px);
-  }
-}
 .cover-wrapper #parallax-window {
   position: absolute;
   width: 100%;
@@ -803,7 +700,7 @@ button {
     --color-mode: 'dark';
   }
   :root:not([color-scheme]) {
-    --color-site-body: #121212;
+    --color-site-body: ;
     --color-read-bkg: #222;
     --color-read-post: #444;
     --color-site-bg: #222;
@@ -825,7 +722,7 @@ button {
     --color-list-hl: #69dfc4;
     --color-meta: #888;
     --color-link: #888;
-    --color-copyright-bkg: #21252b;
+    --color-copyright-bkg: ;
   }
   :root:not([color-scheme]) img {
     filter: brightness(70%) !important;
@@ -875,7 +772,7 @@ button {
   }
 }
 [color-scheme='dark'] {
-  --color-site-body: #121212;
+  --color-site-body: ;
   --color-read-bkg: #222;
   --color-read-post: #444;
   --color-site-bg: #222;
@@ -897,7 +794,7 @@ button {
   --color-list-hl: #69dfc4;
   --color-meta: #888;
   --color-link: #888;
-  --color-copyright-bkg: #21252b;
+  --color-copyright-bkg: ;
 }
 [color-scheme='dark'] img {
   filter: brightness(70%) !important;
@@ -1872,9 +1769,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   volantis.GLOBAL_CONFIG ={
     debug: "env",
-    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
+    cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1707984893188),
+    lastupdate: new Date(1708012468541),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate","webinfo","music"],
       for_post: ["toc"],
@@ -2298,6 +2195,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd begin-->
   
   <!-- Custom Files headEnd end-->
+  <!-- front-matter head_end begin -->
+  <!-- front-matter head_end end -->
 </head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
@@ -2305,6 +2204,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files bodyBegin begin-->
     
     <!-- Custom Files bodyBegin end-->
+    <!-- front-matter body_begin begin -->
+    <!-- front-matter body_begin end -->
     <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
@@ -2452,7 +2353,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div class="m_search">
         <form name="searchform" class="form u-search-form">
           <i class="icon fa-solid fa-search fa-fw"></i>
-          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词" />
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
         </form>
       </div>
       
@@ -2594,7 +2495,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
-      <div id="half" class='cover-wrapper post dock' style="display: ;">
+      <div id="half" class='cover-wrapper post search' style="display: ;">
         
   <div id="parallax-window"></div>
 
@@ -2602,13 +2503,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class='top'>
     
     
-      <p class="title">我思故而我生</p>
+      <p class="title"><font> <span>我思</span><span>故而</span><span>我生</span></font></p>
     
     
-      <p class="subtitle">岁月了无痕，时光轻染故事尘。百年光景如梦航，笔墨留香绘千行。</p>
+      <p class="subtitle"><div id="binft"></div></p>
     
   </div>
   <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="请输入您要检索的关键词..." />
+          <i class="icon fa-solid fa-search fa-fw"></i>
+        </form>
+      </div>
+    
     <div class='menu navigation'>
       <div class='list-h'>
         
@@ -2617,42 +2526,42 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               
               active-action="action-home">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f4f0.svg'><p>博客</p>
+              <p>博客</p>
             </a>
           
             <a href="/categories"
               
               
               active-action="action-categories">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f396.svg'><p>分类</p>
+              <p>分类</p>
             </a>
           
             <a href="/tags"
               
               
               active-action="action-tags">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f389.svg'><p>标签</p>
+              <p>标签</p>
             </a>
           
             <a href="/archives"
               
               
               active-action="action-archives">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f5c3.svg'><p>归档</p>
+              <p>归档</p>
             </a>
           
             <a href="/friends"
               
               
               active-action="action-friends">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f516.svg'><p>友链</p>
+              <p>友链</p>
             </a>
           
             <a href="/about"
               
               
               active-action="action-about">
-              <img src='https://unpkg.com/volantis-static@0.0.1654736714924/media/twemoji/assets/svg/1f9ec.svg'><p>关于</p>
+              <p>关于</p>
             </a>
           
         
@@ -2672,7 +2581,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://wenjing-xin.github.io/2023/04/10/obsidian-教程/">
+  <link itemprop="mainEntityOfPage" href="https://wenjing-xin.github.io/2023/04/10/程序的本质：代码是如何被执行的/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="dreamChaser">
   </span>
@@ -2684,9 +2593,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
+    <div class='headimg-div'>
+      <a class='headimg-a'>
+        <img itemprop="image" class='headimg' src='https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152340648.png'/>
+      </a>
+    </div>
   
   <div class="article-meta" id="top">
     
@@ -2759,17 +2670,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h2 id="一、解释型、编译型、混合型语言"><a href="#一、解释型、编译型、混合型语言" class="headerlink" title="一、解释型、编译型、混合型语言"></a>一、解释型、编译型、混合型语言</h2><p>要回答上述问题，我们要从最基础的讲起。</p>
+    <h2 id="一、解释型、编译型、混合型语言">一、解释型、编译型、混合型语言</h2>
+<p>要回答上述问题，我们要从最基础的讲起。</p>
 <p>我们知道，CPU只认识机器指令（<font color="#548dd4">也叫做CPU指令、机器码</font>），用像Python、C++、Java这样的高级语言编写的代码，需要编译（编译的意思实际上就是“翻译”）为机器指令之后，才能被CPU执行。而不同类型的语言，其编译过程也是不同的，据此我们将其分为三类。</p>
-<h3 id="1-）编译型语言"><a href="#1-）编译型语言" class="headerlink" title="1 ）编译型语言"></a>1 ）编译型语言</h3><p>对于类似C++这样的编译型语言，<font color="#548dd4">代码会事先被编译成机器指令</font>（可执行文件），然后再一股脑儿交给CPU来执行。在执行时，CPU面对是已经编译好的机器指令，直接逐条执行即可，执行效率比较高。但因为每种类型的CPU（比如Intel、ARM等）支持的CPU指令集不同，并且程序还有可能调用操作系统提供的API，所以，编译之后的可执行文件只能在特定的操作系统和机器上执行，换一种操作系统或机器，编译之后的可执行文件就无法执行了。</p>
-<p>title: cpu 类型概述</p>
+<h3 id="1-）编译型语言">1 ）编译型语言</h3>
+<p>对于类似C++这样的编译型语言，<font color="#548dd4">代码会事先被编译成机器指令</font>（可执行文件），然后再一股脑儿交给CPU来执行。在执行时，CPU面对是已经编译好的机器指令，直接逐条执行即可，执行效率比较高。但因为每种类型的CPU（比如Intel、ARM等）支持的CPU指令集不同，并且程序还有可能调用操作系统提供的API，所以，编译之后的可执行文件只能在特定的操作系统和机器上执行，换一种操作系统或机器，编译之后的可执行文件就无法执行了。</p>
 <p><strong>CPU架构</strong>是 CPU 厂商给属于同一系列的CPU产品定的一个规范，主要目的是为了区分不同类型CPU的重要标示。目前市面上的CPU分类主要分有两大阵营，一个是intel、AMD为首的复杂指令集CPU，另一个是以IBM、ARM为首的精简指令集CPU。两个不同品牌的CPU，其产品的架构也不相同，例如，Intel、AMD的CPU是X86架构的，而IBM公司的CPU是PowerPC架构，ARM公司是ARM架构。</p>
-<h3 id="2-）解释型语言"><a href="#2-）解释型语言" class="headerlink" title="2 ）解释型语言"></a>2 ）解释型语言</h3><p>对于类似Python这样的解释型语言，代码并不会被事先编译成机器指令，而是在执行的过程中，由<font color="#548dd4">Python虚拟机</font>（也叫做解释器）逐条取出程序中的代码，编译成机器指令，交由CPU执行，完成之后，再取出下一条代码，重复上述的编译、执行过程。这种<font color="#548dd4">一边编译一边执行的过程，叫做解释执行。</font></p>
+<h3 id="2-）解释型语言">2 ）解释型语言</h3>
+<p>对于类似Python这样的解释型语言，代码并不会被事先编译成机器指令，而是在执行的过程中，由<font color="#548dd4">Python虚拟机</font>（也叫做解释器）逐条取出程序中的代码，编译成机器指令，交由CPU执行，完成之后，再取出下一条代码，重复上述的编译、执行过程。这种<font color="#548dd4">一边编译一边执行的过程，叫做解释执行。</font></p>
 <p>解释型语言相对于编译型语言，执行速度会慢一些。因为程序是在执行的过程中一边编译一边执行的，所以，程序整体的执行时间包含了程序编译的时间。不过，使用解释性语言编写的代码，<font color="#d99694">可移植性更好</font>。程序在执行的过程中，<font color="#9bbb59">虚拟机可以根据当前所在机器的CPU类型和操作系统类型，翻译成不同的CPU指令</font>。这样，同一份代码就可以运行在不同类型的机器和不同类型的操作系统上。这就是常听到的“一次编写，多处运行”。</p>
-<h3 id="3）混合型语言"><a href="#3）混合型语言" class="headerlink" title="3）混合型语言"></a>3）混合型语言</h3><p>Java语言比较特殊，它属于混合型语言，既包含<font color="#e36c09">编译执行也包含解释执行</font>。</p>
+<h3 id="3）混合型语言">3）混合型语言</h3>
+<p>Java语言比较特殊，它属于混合型语言，既包含<font color="#e36c09">编译执行也包含解释执行</font>。</p>
 <p>Java编译器会先将代码（.java文件）编译成字节码（.<font color="#e36c09">class文件</font>）而非机器码，字节码算是Java代码的一种中间状态，其跟平台无关，但又可以快速地被翻译成机器码。编译之后的字节码在执行时，仍然是解释执行的，也就是逐行读出字节码，然后翻译成机器码，再交给CPU执行。只不过，<span style="background:#40a9ff">从字节码到机器码的翻译过程，比从高级语言到机器码的翻译过程，耗时要少</span>。这样既保证了Java代码的可移植性（同一份代码可以运行在不同的CPU和操作系统上），又避免了解释执行效率低的问题。</p>
 <p>实际上，在解释执行时，也存在编译执行。Java虚拟机会将热点字节码（反复多次执行的代码，类似缓存中的热点数据），编译成机器码缓存起来，以供反复执行，这样就避免了热点字节码反复编译，进一步节省了解释执行的时间。这就是著名的JIT编译（Just In Time Compile，即时编译），这部分内容会在专栏的第三部分中详细讲解，这里就暂不展开。</p>
-<h2 id="二、CPU、操作系统、虚拟机"><a href="#二、CPU、操作系统、虚拟机" class="headerlink" title="二、CPU、操作系统、虚拟机"></a>二、CPU、操作系统、虚拟机</h2><p>上面反复提到了CPU、操作系统、虚拟机，现在，我们就来看下，它们在程序的执行过程中，扮演了什么角色。CPU的工作非常明确，用来执行编译好的机器指令，我们重点看下操作系统和虚拟机。</p>
+<h2 id="二、CPU、操作系统、虚拟机">二、CPU、操作系统、虚拟机</h2>
+<p>上面反复提到了CPU、操作系统、虚拟机，现在，我们就来看下，它们在程序的执行过程中，扮演了什么角色。CPU的工作非常明确，用来执行编译好的机器指令，我们重点看下操作系统和虚拟机。</p>
 <p>1）操作系统在程序执行中的作用</p>
 <p>早期的计算机还没有高级语言和操作系统，程序员用机器指令编写的代码，通过纸带打卡方式记录下来，传输给计算机（可以理解为CPU）直接执行。</p>
 <p>随着硬件资源越来越丰富，计算机中开始集成各种硬件设备，比如内存、硬盘、各种输入输出（键盘、鼠标、显示器等），并且，人们希望多个程序能在计算机中并发执行（比如听歌的同时还能打字），于是，操作系统就诞生了。</p>
@@ -2778,42 +2693,45 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>2）虚拟机在程序执行中的作用</p>
 <p>我们先下来对比一下，C++代码、Python 代码、Java 代码编译和执行的命令。如下所示。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// C++  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">g++ helloword.cpp -o helloworld</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./helloword</span>  </span><br><span class="line">  </span><br><span class="line">// Python  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python helloworld.py</span>  </span><br><span class="line">  </span><br><span class="line">// Java  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac HelloWorld.java</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java HelloWorld</span></span><br></pre></td></tr></table></figure>
-
-<p>仔细观察上述命令行的区别，我们可以看出，C++编译之后的代码直接就可以执行，而 Python 和 Java 代码的执行，需要依赖其他程序，也就是虚拟机，表现在命令行中就是前面有 python、java 字样。  </p>
+<p>仔细观察上述命令行的区别，我们可以看出，C++编译之后的代码直接就可以执行，而 Python 和 Java 代码的执行，需要依赖其他程序，也就是虚拟机，表现在命令行中就是前面有 python、java 字样。</p>
 <p>使用解释型和混合型语言编写的代码，执行过程都需要虚拟机的参与。实际上，虚拟机本身也可以看做一个程序，而且它已经是CPU可以执行的机器指令了。程序员编写的代码相当于嵌套在虚拟机程序中一个插件（或者功能模块），只不过，它跟虚拟机本身的代码有点不同，无法直接交给CPU执行。虚拟机将字节码翻译成CPU指令，放到固定的内存位置，再通过修改CPU寄存器中存储的地址的方式，引导CPU执行这块内存中存储的CPU指令（关于这一部分，我们待会会详细讲解）。</p>
 <p>如果你是一名经验丰富的Java工程师，不知道你有没有感觉到，虚拟机的这套解释执行的机制，跟Java的反射语法异曲同工，反射是在代码的执行过程中，将字符串（类名、方法名等）转化成代码之后再被执行。而虚拟机的解释执行是将字节码（也可以看做是字符串）转化成CPU指令再执行。</p>
-<h2 id="三、CPU-指令、汇编语言、字节码"><a href="#三、CPU-指令、汇编语言、字节码" class="headerlink" title="三、CPU 指令、汇编语言、字节码"></a>三、CPU 指令、汇编语言、字节码</h2><p>前面反复提到CPU指令、字节码，估计你对此会很好奇，它们到底长什么样子。现在，我们就来具体看下。不过，提到CPU指令，免不了要讲一下汇编语言，所以，接下来，我们也会一并讲一下汇编语言。<br>站在操作系统和 CPU 的角度，Java 程序编译之后的字节码跟虚拟机合并在一起，才算是一个完整的程序，才相当于 C++编译之后的可执行文件。CPU 在执行程序员编写的代码的同时，也在执行虚拟机代码。而且是先执行虚拟机代码，然后才是引导执行程序员编写的代码。</p>
-<h3 id="1-）CPU-指令"><a href="#1-）CPU-指令" class="headerlink" title="1 ）CPU 指令"></a>1 ）CPU 指令</h3><p>前面提到，我们经常说的 CPU 指令、机器码、机器指令，实际上都是一个东西，就是 CPU 可以完成的操作。一条 CPU 指令包含的信息主要有：<span style="background:rgba(5, 117, 197, 0.2)">操作码、地址、数据三种</span>，指明所要执行的操作、数据来源、操作结果去向。</p>
+<h2 id="三、CPU-指令、汇编语言、字节码">三、CPU 指令、汇编语言、字节码</h2>
+<p>前面反复提到CPU指令、字节码，估计你对此会很好奇，它们到底长什么样子。现在，我们就来具体看下。不过，提到CPU指令，免不了要讲一下汇编语言，所以，接下来，我们也会一并讲一下汇编语言。站在操作系统和 CPU 的角度，Java 程序编译之后的字节码跟虚拟机合并在一起，才算是一个完整的程序，才相当于 C++编译之后的可执行文件。CPU 在执行程序员编写的代码的同时，也在执行虚拟机代码。而且是先执行虚拟机代码，然后才是引导执行程序员编写的代码。</p>
+<h3 id="1-）CPU-指令">1 ）CPU 指令</h3>
+<p>前面提到，我们经常说的 CPU 指令、机器码、机器指令，实际上都是一个东西，就是 CPU 可以完成的操作。一条 CPU 指令包含的信息主要有：<span style="background:rgba(5, 117, 197, 0.2)">操作码、地址、数据三种</span>，指明所要执行的操作、数据来源、操作结果去向。</p>
 <p>cpu可以完成的所有的操作，叫做指令集。常见的指令集有 X86、X86-64、ARM、MIPS 等。不同的 CPU 支持的指令集可能不同（Intel CPU 支持的 X86 指令集，ARM CPU 支持指令集 ARM）。当然，不同的 CPU 支持的指令集也可以相同（比如 Intel 和 AMD 的 CPU 都支持 X86 和 X86-64 指令集）。同一个 CPU 也可以支持多种指令集（Intel CPU 支持的指令集有 X86、X86-64 以及其他扩展指令集）。CPU 支持的指令集一般都非常庞大，例如 Intel CPU 支持 2000 多条指令，可以完成诸多不同类型的操作。</p>
-<h3 id="2）汇编语言"><a href="#2）汇编语言" class="headerlink" title="2）汇编语言"></a>2）汇编语言</h3><p>前面提到，在计算机发展的早期，程序员直接使用机器码来编写程序。但是，因为机器码是二进制码，所以，编写起来复杂、可读性也不好。为了解决这个问题，汇编语言就被发明出来了。<span style="background:rgba(5, 117, 197, 0.2)">汇编语言由一组汇编指令构成</span>，汇编指令跟CPU指令一一对应，<span style="background:rgba(5, 117, 197, 0.2)">但汇编指令采用字符串而非二进制数来表示指令</span>，所以，可读性好很多。实际上，CPU指令和汇编指令之间的关系，就类似IP地址和域名之间的关系，IP地址和域名一一对应，域名的可读性比IP地址好。</p>
-<p><font color="#ff0000">程序员使用汇编语言编写的代码，需要经过编译，翻译成机器码才能被CPU执行。这个编译过程有个特殊的名称，叫做“汇编”。</font>C&#x2F;C++语言的编译过程，实际上就包含汇编这一步骤。编译器先将C&#x2F;C++代码编译成汇编代码，然后再汇编成机器码。</p>
+<h3 id="2）汇编语言">2）汇编语言</h3>
+<p>前面提到，在计算机发展的早期，程序员直接使用机器码来编写程序。但是，因为机器码是二进制码，所以，编写起来复杂、可读性也不好。为了解决这个问题，汇编语言就被发明出来了。<span style="background:rgba(5, 117, 197, 0.2)">汇编语言由一组汇编指令构成</span>，汇编指令跟CPU指令一一对应，<span style="background:rgba(5, 117, 197, 0.2)">但汇编指令采用字符串而非二进制数来表示指令</span>，所以，可读性好很多。实际上，CPU指令和汇编指令之间的关系，就类似IP地址和域名之间的关系，IP地址和域名一一对应，域名的可读性比IP地址好。</p>
+<p><font color="#ff0000">程序员使用汇编语言编写的代码，需要经过编译，翻译成机器码才能被CPU执行。这个编译过程有个特殊的名称，叫做“汇编”。</font>C/C<ins>语言的编译过程，实际上就包含汇编这一步骤。编译器先将C/C</ins>代码编译成汇编代码，然后再汇编成机器码。</p>
 <p>我们拿一段 C 语言代码来举例，如下所示，看看编译之后的汇编代码长什么样子。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;studio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> c = a + b;</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码编译为汇编代码，如下所示：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -S hello.c</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> hello.s</span>  </span><br><span class="line">_main:                                  ## @main  </span><br><span class="line">.cfi_startproc  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># %bb.0:</span></span>  </span><br><span class="line">pushq %rbp  </span><br><span class="line">.cfi_def_cfa_offset 16  </span><br><span class="line">.cfi_offset %rbp, -16  </span><br><span class="line">movq %rsp, %rbp  </span><br><span class="line">.cfi_def_cfa_register %rbp  </span><br><span class="line">movl $0, -4(%rbp)  </span><br><span class="line">movl $1, -8(%rbp)  </span><br><span class="line">movl $2, -12(%rbp)  </span><br><span class="line">movl -8(%rbp), %eax  </span><br><span class="line">addl -12(%rbp), %eax  </span><br><span class="line">movl %eax, -16(%rbp)  </span><br><span class="line">movl -16(%rbp), %eax  </span><br><span class="line">popq %rbp  </span><br><span class="line">retq</span><br></pre></td></tr></table></figure>
 <p>有同学可能有疑问，这个汇编代码跟他见过的不大一样，实际上，汇编指令跟 CPU 指令一一对应，相同指令集对应的汇编指令集都是一样的（比如上面的代码是 Intel 的 CPU 支持的 X86 指令集对应的汇编代码），只不过语法格式有可能不同。汇编语言主要有两种语法格式，一种是 Intel 风格的，一种是 AT&amp;T 风格的。上述汇编代码是 AT&amp;T 风格，对应的 Intel 风格如下所示。对比上下两段汇编代码，唯一的区别就是格式不同而已。注意下面这段代码添加了部分注释，汇编中的注释以分号开头。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -S -masm=intel hello.c</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> hello.s</span>  </span><br><span class="line">_main:                                  ## @main  </span><br><span class="line">.cfi_startproc  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># %bb.0:</span></span>  </span><br><span class="line">push rbp  </span><br><span class="line">.cfi_def_cfa_offset 16  </span><br><span class="line">.cfi_offset rbp, -16  </span><br><span class="line">mov rbp, rsp  </span><br><span class="line">.cfi_def_cfa_register rbp  </span><br><span class="line">mov dword ptr [rbp - 4], 0  ;安全word，没有实际意义  </span><br><span class="line">mov dword ptr [rbp - 8], 1  ;int a = 1; 存储在栈中rbp-8的位置  </span><br><span class="line">mov dword ptr [rbp - 12], 2 ;int b = 2; 存储在栈中rpb-12的位置  </span><br><span class="line">mov eax, dword ptr [rbp - 8] ;a的值累加在寄存器eax上  </span><br><span class="line">add eax, dword ptr [rbp - 12] ;b的值累加在寄存器eax上  </span><br><span class="line">mov dword ptr [rbp - 16], eax ;int c = a+b  </span><br><span class="line">mov eax, dword ptr [rbp - 16] ;return c。返回值通过eax返回给上层。  </span><br><span class="line">       ;所以，把c值赋值给eax。因为上一句指令结束之后，  </span><br><span class="line">       ;有可能还有其他运算还会用到eax（本程序比较简单，没有其他运算了），  </span><br><span class="line">       ;所以eax中的值有可能会被改变，所以程序返回时重新将c值重新赋值给eax。  </span><br><span class="line">pop rbp  </span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
-
 <p>对于没学习过汇编语言的同学，完全理解上述汇编代码可能比较困难。不过，这里，我们只需要简单了解汇编代码长什么样子，有个直观的认识即可。关于以上汇编代码的具体解释，我们在下一节会讲到。</p>
-<h3 id="3）字节码"><a href="#3）字节码" class="headerlink" title="3）字节码"></a>3）字节码</h3><p>我们常说，Java 语言是跨平台的，”write once, run anywhere”（一次编写，多处运行）。程序员编写的代码，在不需要任何修改的情况下，就可以运行在不同的平台上（不同的操作系统和 CPU）。</p>
+<h3 id="3）字节码">3）字节码</h3>
+<p>我们常说，Java 语言是跨平台的，“write once, run anywhere”（一次编写，多处运行）。程序员编写的代码，在不需要任何修改的情况下，就可以运行在不同的平台上（不同的操作系统和 CPU）。</p>
 <p>有人认为，Java语言之所以能跨平台，是字节码的功劳。因为字节码跟平台无关，我们在一个平台上编译得到的字节码，可以运行在其他平台上。</p>
 <p>实际上，这样的观点是不确切的。毕竟没有字节码的解释型语言也可以跨平台。字节码诞生的目的是，克服解释型语言解释执行速度慢的缺点（字节码是介于高级语言和机器码之间的形态，比高级语言解释执行更快）。字节码跟平台无关，是为了让Java语言保留解释型语言跨平台的优点，而不是促使Java语言跨平台的最根本原因。这一点要搞清楚。</p>
 <p>之所以Java语言能做到跨平台，最根本原因是有虚拟机的存在。Java代码跟平台无关，字节码跟平台无关，在编译执行过程中，总要有一个环节跟平台有关，不然，跟平台有关的、最终可以被CPU执行的机器码从何而来。俗话说的好，哪有什么岁月静好，只是有人帮你负重前行。跟平台有关的环节就是解释执行环节，而这个环节的主导者就是虚拟机。</p>
-<p>虚拟机是已经编译好的可以被CPU执行的机器码，而机器码又是跟平台有关的，因此虚拟机必须跟平台有关。这也是为什么在不同的平台（操作系统和CPU）上，我们需要下载不同的Java虚拟机的原因。<br><img src="/../attachment/325ef93a4a9adea09fee8879218bfd7e.png" class="lazyload" data-srcset="/../attachment/325ef93a4a9adea09fee8879218bfd7e.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p>虚拟机是已经编译好的可以被CPU执行的机器码，而机器码又是跟平台有关的，因此虚拟机必须跟平台有关。这也是为什么在不同的平台（操作系统和CPU）上，我们需要下载不同的Java虚拟机的原因。<br>
+<img src="../attachment/325ef93a4a9adea09fee8879218bfd7e.png" class="lazyload" data-srcset="../attachment/325ef93a4a9adea09fee8879218bfd7e.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>明确了字节码的作用之后，我们通过一个简单的例子，来看下字节码到底长什么样子？</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String[] args)</span> &#123;  </span><br><span class="line">    <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;  </span><br><span class="line">    <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">222222</span>;  </span><br><span class="line">    <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> a + b;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于上面的代码，我们使用javac命令编译之后，会得到一个后缀为.class的文件HelloWorld.class，这个文件里保存的一堆二进制码就是字节码。为了方便查看，我们用vi打开转化成16进制格式之后，如下所示：<br><img src="/../attachment/0856de2088925c1a4f6ab1e0ed1836d1.png" class="lazyload" data-srcset="/../attachment/0856de2088925c1a4f6ab1e0ed1836d1.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
+<p>对于上面的代码，我们使用javac命令编译之后，会得到一个后缀为.class的文件HelloWorld.class，这个文件里保存的一堆二进制码就是字节码。为了方便查看，我们用vi打开转化成16进制格式之后，如下所示：<br>
+<img src="../attachment/0856de2088925c1a4f6ab1e0ed1836d1.png" class="lazyload" data-srcset="../attachment/0856de2088925c1a4f6ab1e0ed1836d1.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></p>
 <p>显然，这样的二进制文件是交给虚拟机解析的，人类阅读起来非常费劲。我们可以<font color="#ff0000">使用javap工具，将class文件解析成适合人类阅读的格式，如下所示。这个过程被叫做反编译。</font>为啥叫做反编译呢？我们可以跟“编译”对比着理解。编译是将贴近人阅读的内容，翻译成贴近机器阅读的内容的过程。对应地，反编译就是将贴近机器阅读的内容，翻译成贴近人阅读的内容的过程。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javap -verbose HelloWorld</span>   </span><br><span class="line">Classfile /Users/wangzheng/Desktop/HelloWorld.class  </span><br><span class="line">  Last modified 2022-3-20; size 291 bytes  </span><br><span class="line">  MD5 checksum ea48b76348ad4f0c07a2bf96840e8e00  </span><br><span class="line">  Compiled from &quot;HelloWorld.java&quot;  </span><br><span class="line">public class HelloWorld  </span><br><span class="line">  minor version: 0  </span><br><span class="line">  major version: 52  </span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER  </span><br><span class="line">Constant pool:  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">1 = Methodref          <span class="comment">#4.#13         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span></span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">2 = Integer            222222</span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">3 = Class              <span class="comment">#14            // HelloWorld</span></span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">4 = Class              <span class="comment">#15            // java/lang/Object</span></span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">5 = Utf8               &lt;init&gt;</span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">6 = Utf8               ()V</span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">7 = Utf8               Code</span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">8 = Utf8               LineNumberTable</span>  </span><br><span class="line"><span class="meta prompt_">   #</span><span class="language-bash">9 = Utf8               main</span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">10 = Utf8               ([Ljava/lang/String;)V</span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">11 = Utf8               SourceFile</span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">12 = Utf8               HelloWorld.java</span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">13 = NameAndType        <span class="comment">#5:#6          // &quot;&lt;init&gt;&quot;:()V</span></span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">14 = Utf8               HelloWorld</span>  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">15 = Utf8               java/lang/Object</span>  </span><br><span class="line">&#123;  </span><br><span class="line">  public HelloWorld();  </span><br><span class="line">    descriptor: ()V  </span><br><span class="line">    flags: ACC_PUBLIC  </span><br><span class="line">    Code:  </span><br><span class="line">      stack=1, locals=1, args_size=1  </span><br><span class="line">         0: aload_0  </span><br><span class="line">         1: invokespecial #1   // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V  </span><br><span class="line">         4: return  </span><br><span class="line">      LineNumberTable:  </span><br><span class="line">        line 1: 0  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  public static void main(java.lang.String[]);  </span><br><span class="line">    descriptor: ([Ljava/lang/String;)V  </span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC  </span><br><span class="line">    Code:  </span><br><span class="line">      stack=2, locals=4, args_size=1  </span><br><span class="line">         0: iconst_1  </span><br><span class="line">         1: istore_1  </span><br><span class="line">         2: ldc           #2     // int 222222  </span><br><span class="line">         4: istore_2  </span><br><span class="line">         5: iload_1  </span><br><span class="line">         6: iload_2  </span><br><span class="line">         7: iadd  </span><br><span class="line">         8: istore_3  </span><br><span class="line">         9: return  </span><br><span class="line">      LineNumberTable:  </span><br><span class="line">        line 3: 0  </span><br><span class="line">        line 4: 2  </span><br><span class="line">        line 5: 5  </span><br><span class="line">        line 6: 9  </span><br><span class="line">&#125;  </span><br><span class="line">SourceFile: &quot;HelloWorld.java&quot;</span><br></pre></td></tr></table></figure>
-
 <p>不过，你有没有产生过这样的好奇，class文件为什么叫字节码？跟字节（byte）有什么关系呢？实际上，class文件里包含了很多类的信息，而其中main()函数中的代码对应的字节码指令（字节码指令是二进制的，下面的是反编译之后的助记符）只有下面这几行：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0: iconst_1  //把int型1入栈  </span><br><span class="line">         1: istore_1  //把栈顶int型数值存入第一个变量，也就是a  </span><br><span class="line">         2: ldc #2    //将常量池中的#2号常量222222入栈  </span><br><span class="line">         4: istore_2  //把栈顶int型数值存入第二个变量，也就是b  </span><br><span class="line">         5: iload_1   //把第一个变量的值入栈  </span><br><span class="line">         6: iload_2   //把第二个变量的值入栈  </span><br><span class="line">         7: iadd      //将栈顶的两个int型数据相加，结果压入栈  </span><br><span class="line">         8: istore_3  //将栈顶int型数值存入第三个变量，也就是c  </span><br><span class="line">         9: return    //程序返回</span><br></pre></td></tr></table></figure>
-
 <p>一条字节码指令有些包含操作码和操作数两部分，有些只包含操作码这一部分。因为操作码长度为一个字节，所以，这种指令格式被叫做字节码。从另一个角度，我们也可以得知，字节码的操作码类型不超过256个（2^8）。相对于CPU指令和汇编指令，字节码指令少很多。这是因为字节码指令相对于CPU指令来说，抽象程度更高。一条字节码指令完成的逻辑，比一条CPU指令完成的逻辑，更加复杂。</p>
 <blockquote>
-<p>Java8 的字节码指令集<a target="_blank" rel="noopener" href="https://www.xzgedu.com/detail/i_625e1003e4b09dda125cbfc5/1?from=p_625cfab5e4b01a4851f30d8a&type=6&parent_pro_id=">点击此处</a>查看</p>
+<p>Java8 的字节码指令集<a target="_blank" rel="noopener" href="https://www.xzgedu.com/detail/i_625e1003e4b09dda125cbfc5/1?from=p_625cfab5e4b01a4851f30d8a&amp;type=6&amp;parent_pro_id=">点击此处</a>查看</p>
 </blockquote>
-<h2 id="四、代码是如何被-Cpu-执行的"><a href="#四、代码是如何被-Cpu-执行的" class="headerlink" title="四、代码是如何被 Cpu 执行的"></a>四、代码是如何被 Cpu 执行的</h2><p>有了以上铺垫，我们最后讲解一下：“代码是如何被 CPU 执行的”。</p>
+<h2 id="四、代码是如何被-Cpu-执行的">四、代码是如何被 Cpu 执行的</h2>
+<p>有了以上铺垫，我们最后讲解一下：“代码是如何被 CPU 执行的”。</p>
 <p>不管是使用哪种类型的编程语言（编译型、解释型、混合型）编写的代码，不管经历什么样的编译、解释过程，最终交给 CPU 执行的都是机器码。</p>
 <p>提到 CPU，就不得不提寄存器。</p>
 <p>我们知道，内存的读写速度比起 CPU 指令的执行速度要慢很多。从内存中读取 32 位二进制数据所耗费的时间，相当于 CPU 执行上百条指令所耗费的时间。所以，CPU 在执行指令时，如果依赖内存来存储计算过程中的中间数据，那么，CPU 总是在等待读写内存操作的完成，势必非常会影响 CPU 的计算速度。为了解决这个问题，寄存器就被发明出来了。</p>
@@ -2829,7 +2747,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>程序由一组指令和一堆数据组成。指令存储在某块内存中（这块内存被称为代码段），由CPU逐一读取执行。数据也存储在某块内存中（这块内存被称为数据段）。指令执行的过程中，会操作（读取或写入）这块内存中的数据。</p>
 <p>CS（Code Segment Register）代码段地址寄存器存储了代码段的起始地址。上文中讲到，IP 寄存器中存储的是下一条将要执行的指令的内存地址，实际上，这样的说法是不准确的。CS 和 IP 两个寄存器中存储的内容如下计算，才能得到一个真正的物理内存地址。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">物理内存地址 = 段地址（如CS） * 16 + 偏移地址（如IP）</span><br></pre></td></tr></table></figure>
-
 <p>我们拿 8086 CPU（早期 16 位的 X86 CPU）举例解释。8086 CPU 具有 20 位地址总线，支持 1MB 内存的寻址能力。对于 16 位的 IP 寄存器，只能存储 64K（2^16）个内存地址，一个字节占一个地址，那么只能支持 64KB 大小内存的寻址。为了扩大寻址能力，计算机使用段地址和偏移地址相结合的方式来确定一个物理内存地址。</p>
 <p>对于存储下一条将要执行的指令的地址的寄存器，你或许还听到过PC寄存器（Program Counter Register）这种叫法。实际上，PC寄存器是一个抽象概念，CS寄存器和IP寄存器是具体寄存器的名称。我们可以简单理解为PC寄存器就是CS寄存器和IP寄存器的抽象统称。</p>
 <p>DS（Data Segment Register）数据段地址寄存器存储了数据段的起始地址，同理，它跟DI或SI结合才能确定一个数据段中的内存地址。</p>
@@ -2841,11 +2758,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>以上寄存器都是用来辅助完成CPU的各种指令。注意，以上是16位的寄存器，32位的寄存器名称在对应的16位寄存器名称前加E（例如EAX，EBP，ESP，EIP），64位的寄存器名称在对应的16位寄存器名称前加R（例如RAX，RBP，RSP，RIP）。在下一节中，在讲解编程语言基本语法的底层实现原理时，我们还会提到更多寄存器的使用细节。</p>
 <p>了解了CPU指令执行的重要部件寄存器之后，我们来看下CPU执行指令的流程。</p>
 <p>对于编译型语言，操作系统会把编译好的机器码，加载到内存中的代码段，将代码中变量等数据放入内存中的数据段，并且设置好各个寄存器的初始值，如DS、CS等。IP寄存器中存储代码段中第一条指令的内存地址相对于CS的偏移地址。</p>
-<p>CPU根据PC寄存器（CS寄存器和IP寄存器的总称）存储的内存地址，从对应的内存单元中取出一条CPU指令，放到IR指令寄存器中，然后将IP寄存器中的地址+4（也就是下一条指令在代码段中的偏移地址。内存中的每一个字节都对应一个地址。对于32位CPU，一条指令长度为4字节，下一条指令地址&#x3D;当前指令地址+4。对于64位CPU，一条指令长度是8字节，下一条指令地址&#x3D;当前指令地址+8）。一条指令执行完成之后，再通过PC寄存器中的地址，取下一条指令继续执行。循环往复，直到所有的指令都执行完成。</p>
+<p>CPU根据PC寄存器（CS寄存器和IP寄存器的总称）存储的内存地址，从对应的内存单元中取出一条CPU指令，放到IR指令寄存器中，然后将IP寄存器中的地址+4（也就是下一条指令在代码段中的偏移地址。内存中的每一个字节都对应一个地址。对于32位CPU，一条指令长度为4字节，下一条指令地址=当前指令地址+4。对于64位CPU，一条指令长度是8字节，下一条指令地址=当前指令地址+8）。一条指令执行完成之后，再通过PC寄存器中的地址，取下一条指令继续执行。循环往复，直到所有的指令都执行完成。</p>
 <p>对于解释型或混合型语言，操作系统将虚拟机本身的机器码，加载到内存中的代码段，然后一条一条地被CPU执行。这部分被执行的指令对应的功能，就包括把程序员编写的程序解释成机器码这一功能。虚拟机把解释好的机器码会放到某段内存中，然后将PC寄存器的地址设置为这段内存的首地址，于是，CPU就被虚拟机引导去执行程序员编写的代码了。</p>
 <p>在本节中，我们把程序用到的内存，粗略地分为代码段和数据段，对于Java语言来说，其虚拟机对内存还做了更加细致的划分，这部分内容我们在专栏的JVM部分讲解。</p>
-<h2 id="五、课后思考题"><a href="#五、课后思考题" class="headerlink" title="五、课后思考题"></a>五、课后思考题</h2><p>1）在你熟悉的语言中，有哪些是解释型语言？哪些是编译型语言？哪些是混合型语言？</p>
-<p>2）本节中提到，C&#x2F;C++代码会先编译成汇编代码，再汇编成机器码，才能被执行。按理来说，汇编代码跟机器码一一对应，为什么 C&#x2F;C++代码不直接编译成机器码呢？先编译成汇编代码不是多此一举吗？</p>
+<h2 id="五、课后思考题">五、课后思考题</h2>
+<p>1）在你熟悉的语言中，有哪些是解释型语言？哪些是编译型语言？哪些是混合型语言？</p>
+<p>2）本节中提到，C/C<ins>代码会先编译成汇编代码，再汇编成机器码，才能被执行。按理来说，汇编代码跟机器码一一对应，为什么 C/C</ins>代码不直接编译成机器码呢？先编译成汇编代码不是多此一举吗？</p>
 <p>#未理解 ： 寄存器的各种形式</p>
 
   </div>
@@ -2863,7 +2781,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
           <div class="copyright license">
             <div class="license-title">程序的本质：代码是如何被执行的</div>
-            <div class="license-link"><a href="https://wenjing-xin.github.io/2023/04/10/obsidian-教程/">https://wenjing-xin.github.io/2023/04/10/obsidian-教程/</a>
+            <div class="license-link"><a href="https://wenjing-xin.github.io/2023/04/10/程序的本质：代码是如何被执行的/">https://wenjing-xin.github.io/2023/04/10/程序的本质：代码是如何被执行的/</a>
             </div>
             <div class="license-meta">
               <div class="license-meta-item">
@@ -2877,7 +2795,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               <div class="license-meta-item">
                 <div class="license-meta-title">更新于</div>
-                <div class="license-meta-text">2024年1月18日</div>
+                <div class="license-meta-text">2024年2月15日</div>
               </div>
               
               
@@ -2912,10 +2830,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-18T08:56:18+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-02-15T23:40:41+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年1月18日</p>
+    <p>更新于：2024年2月15日</p>
   </a>
 </div>
 
@@ -2938,7 +2856,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
           
           >
           
@@ -2950,7 +2868,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
           
           >
           
@@ -2962,7 +2880,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/&title=程序的本质：代码是如何被执行的 - dreamChaser&summary="
           
           >
           
@@ -2976,7 +2894,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class='hoverbox'>
           <a class='share'><img src="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/wechat.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/wechat.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></a>
           <div class='target'>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpklEQVR42u3aS3LjMAwFQN//0sl+plLiA6AIdpo7J/oQzc0rQK8vq7ReCMCBAwfOAgduCdyruP69/78X/HD96f/bBR6+N64XHDhw4MCBAwduGVx3Q93rqgd1ekBT9YIDBw4cOHDgwG2Fqwbe041ePbcL0IW/vB4cOHDgwIEDB+5D4F7NdRqM0wBdPUhw4MCBAwcOHLi/Bnd6f9w4PAzE6UAaHDhw4MCBAwfu0+CmCqsOkNMD6B70Y5N8cODAgQMHDhy4IbhqA/Jdf5frBQcOHDhw4MCBWwLXXdXAeVeDNA24cb3gwIEDBw4cOHBL4LqNyKkGYndQPBV4xzrA4MCBAwcOHDhwD8GlA+PqILr6IeLp86rB+8f7wYEDBw4cOHDglsGlhU4H3eqBdQ8+vg8cOHDgwIEDB24JXAqVQnRBphqQaUC+DMDgwIEDBw4cOHAPw3UD6FSjsAtRbXymARscOHDgwIEDB24L3OmaBkiDbHogVahLB3DgwIEDBw4cuCVwY8GwGVyrHxZ2B9YxNDhw4MCBAwcO3BK4uxp+3eu6Abza2Lz8DQ4cOHDgwIEDtwTuNAhOFV59X7qvamMUHDhw4MCBAwfu3eCqAbLaaLxr8N0dYF/uHxw4cODAgQMHbglcNSCm1001ILsH1x2IgwMHDhw4cODAbYNLG43dDafPnxpsVwM0OHDgwIEDBw7cNrhq4y9tXN410E4Dc7UOcODAgQMHDhy4bXDVYJoG4vIAuDlg7h4UOHDgwIEDBw7cVrhukOwG4Wqh1UZku6EKDhw4cODAgQO3BO6ugfQUwOnv6gGdBmlw4MCBAwcOHLhtcNUHT92fNi67g+vq38GBAwcOHDhw4N4dbqrhWQ223YZqCnX8RSY4cODAgQMHDtwvw50CdBuFU4F16n3pwYEDBw4cOHDgwL0LXLeB2Q247aDaHEhfNjLBgQMHDhw4cOAehpsOkNMf/sUD42ZQvqwfHDhw4MCBAwduCVx3pY3KdMA8df9p0L+sFxw4cODAgQMHbgncdGBMr+sG7HZjEhw4cODAgQMH7s3h0sB7WnAajH8bJn4+OHDgwIEDBw7cUripjXYH13ftpxr0wYEDBw4cOHDgPg0uDa7dQJwG9HQfl88DBw4cOHDgwIH7MLingKoD8bRRCw4cOHDgwIEDtx2uOpCuFlYtOA2y1cAMDhw4cODAgQO3He7uwqrX3R2Y4wE4OHDgwIEDBw7cEjgrDMwIwIEDB84CB+7Z9Q0wa4Nq0yP8ggAAAABJRU5ErkJggg==">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdgAAAHYCAAAAADLsqZFAAAH7ElEQVR42u3aQXLjOBAEQP//0zsP2FAIXV30xICJmyyKBDrhA6r5859x5fhRArAGWAOsAdYAC1YJLof9CcfHGx9+/+26b/edzuv0Pq15pvPdeoAFCxYsWLBgwYIFCxbsW2DTAp9O7LRgn67fbpDpdafraH1ueYAFCxYsWLBgwYIFCxbs22DTBaUH8C3UNDBJN8p0fdv6xB5gwYIFCxYsWLBgwYIFCzY6eLeAWoDbxncadEy/BwsWLFiwYMGCBQsWLFiwvwvbPpingNOGeWtjbRvqYMGCBQsWLFiwYMGCBQt2Bjs9eG+DiFbwkAKkhUw3dBpcHNcHLFiwYMGCBQsWLFiwYF8COx3bBrfPu4DlowdYsGDB+gzWZ7BgwYIFeznsdkwb6dtG+HSjpQ3udjCTNvDHHmDBggULFixYsGDBggV7Oey2kCn8dCNMAVoN7+m6T9fVrhdYsGDBggULFixYsGDBvgX2tJDpwtowrWBh2vCebuSnrv+6DrBgwYIFCxYsWLBgwYK9HDY9uLca6K0G+RS+vcG2Gyqt/9fkCSxYsGDBggULFixYsGAvhU0L0Wqcbw/qrcKm897ed+rw8XuwYMGCBQsWLFiwYMGCfRlsGkSkE2oFI9N5bwv9txrzX+sMFixYsGDBggULFixYsJfDpo3utEG8LfC2Af9UQJJujGnj/ut9wYIFCxYsWLBgwYIFC/ZlsGkDeRs8pM/fNspbjfPWiwnrFxrAggULFixYsGDBggUL9nLY7USfCiy2AUU6r+19T19c2AYSH78HCxYsWLBgwYIFCxYs2Mthp0HB6UF/G0SkDf/WiwGt5z3VqK812sGCBQsWLFiwYMGCBQv2H4U9XVA60enBPD3At363beBvX0RI5wcWLFiwYMGCBQsWLFiwt8M+1RB/KthIC/M00DTY2I6PXmDBggULFixYsGDBggV7OewWtB0cpAWa3m9auFajPl3H8fVgwYIFCxYsWLBgwYIFeznsNIBoNdJbwcO2MZ5urNYLCe0XDMCCBQsWLFiwYMGCBQv2dtjthFsH+9PnTzfC+sBfaoi3NvDXuoEFCxYsWLBgwYIFCxbsy2CnAUW7gNtG+XY+0+Agvb79AgFYsGDBggULFixYsGDBvgV2O5E0wHjqvtvntuY1vW77YgJYsGDBggULFixYsGDBvhU2PeinDeoU+qkDfrre7XNqGx4sWLBgwYIFCxYsWLBgL4dNH9T+XQqSNvBbQUh6fRqIfP0dWLBgwYIFCxYsWLBgwV4OO71BGgS0AohpodJApRU8bMHGGwssWLBgwYIFCxYsWLBgL4dtF/SpDTPdQK1CbzdQeyN9vS9YsGDBggULFixYsGDBXg77W4V46uCe3jcFm8639Q9xHIiABQsWLFiwYMGCBQsW7EtgpzDTBbWv2wYU28Z/Ot80oDi+HixYsGDBggULFixYsGBfAttqKKeN5VZjvt3IP91QaXBRrzNYsGDBggULFixYsGDBXg57+oDtgtOD+bSQ2xcE2hs2HWDBggULFixYsGDBggUL9qzRnh6wU+g0KNkGG6dAT0NP6woWLFiwYMGCBQsWLFiwb4dNHzRdaAqRPi/9/TZ4SOu3DTDAggULFixYsGDBggUL9i2wrYN52vieNtBbAce08b59kaDVkP86P7BgwYIFCxYsWLBgwYJ9GWwKMF1w2ohuBxjpiwBpQJM22I+/BwsWLFiwYMGCBQsWLNjLYdPG+FOw7Qb3djzdmD/dwMcbECxYsGDBggULFixYsGAvh01v0C5IeyNMA4V1MPAQ7PgfDyxYsGDBggULFixYsGBfBrs9SP9Wwad/P11vq2E/XcdpXeI3KMCCBQsWLFiwYMGCBQv2Utgp3HSh20Kl8NuAYxvIpHUd1wksWLBgwYIFCxYsWLBgL4edLmTboI4byEuo9gsD28Z8a50fAwqwYMGCBQsWLFiwYMGCvRR2GjS0DvzTBvK2gK0XBVKo9t+PkyewYMGCBQsWLFiwYMGCvRR2GxxMG8StgkwB0hcKto34NOCZbmSwYMGCBQsWLFiwYMGCfQts3NgNAaYFeyrgmBZwuzG2G+nrPwhYsGDBggULFixYsGDBvgQ2DRimUNNGfqvh3w5WtnXYNurXyRNYsGDBggULFixYsGDB/qOwaUO33RDfHvS3839qPq1G/fFGBAsWLFiwYMGCBQsWLNjLYaeN7umBvnV9KxhpwW3n+ViwAxYsWLBgwYIFCxYsWLAvgZ0uIP39b22cVtCRNsZbjXOwYMGCBQsWLFiwYMGCBXvWaN82plsByLRxvd2o2wAkbbhvG/dgwYIFCxYsWLBgwYIFC3Z3cI4bxYcBxXTjTDfQ6f2m82sHMv/7DBYsWLBgwYIFCxYsWLCXw/6EY7ugVmFaAUnaqJ8GFtvG/Nf6gQULFixYsGDBggULFuxLYFsH8NMN8FSQMd04bcjWfOJGPFiwYMGCBQsWLFiwYMG+DLZ1oE4LlwYIraBlG2y0XlBI6wUWLFiwYMGCBQsWLFiwYHeBRHtsg4F0vk9thPZ9wYIFCxYsWLBgwYIFCxbsLqDYFjgNPNINst2o6T9E7flgwYIFCxYsWLBgwYIF+zLY7YF6Gzw8BbkNOKbBzPb7ONAACxYsWLBgwYIFCxYs2JfAbl9g3k54Wvg0EEjv02qcPxWwgAULFixYsGDBggULFuxbYI27BliwBlgDrAHWAGuAvXT8AbdQBp5wb1EFAAAAAElFTkSuQmCC">
           </div>
         </div>
       
@@ -3012,7 +2930,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='next' href='/2023/03/12/RESTFUL%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%8E%A5%E5%8F%A3/'>
           <p class='title'>如何编写Restful风格的接口<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>一、Restful风格接口Restful 风格的API是一种软件架构风格，设计风格而不是标准，只是提供了一组设计原则和约束条件。它主要用于客户端和服务器交互类的软件。基于这个风格设计的软件可以更...</p>
+          <p class='content'>一、Restful风格接口
+Restful 风格的API是一种软件架构风格，设计风格而不是标准，只是提供了一组设计原则和约束条件。它主要用于客户端和服务器交互类的软件。基于这个风格设计的软件可以...</p>
         </a>
       
     </div>
@@ -3028,7 +2947,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/index.html#comments">
+      <meta itemprop="discussionUrl" content="/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论区：</p>
     
@@ -3172,7 +3091,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
       
         本站使用
-        <a href="https://github.com/volantis-x/hexo-theme-volantis/#5.7.7" target="_blank" class="codename">Volantis</a>
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1" target="_blank" class="codename">Volantis</a>
         作为主题
       
     
@@ -3845,7 +3764,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
   function loadSearchScript() {
     // see: layout/_partial/scripts/_ctrl/cdnCtrl.ejs
-    return volantis.js("/js/search/hexo.js");
+    return volantis.js("js/search/hexo.js");
   }
 
   function loadSearchService() {
@@ -3920,12 +3839,14 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016215.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015087.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016479.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152020332.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018248.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152014748.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016249.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019170.png","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019455.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152017365.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018512.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015153.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp"];
   let index = 0;
   let IntervalParallax = null;
 
   function parallax(){
     let ParallaxWindow = document.querySelector("#parallax-window");
+    
+      ParallaxWindow = document.querySelector("html");
     
     Parallax.window = ParallaxWindow;
     Parallax.options.fade = 1500;
@@ -3935,7 +3856,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (imgs.length>1) {
       IntervalParallax = setInterval(function () {
         next_parallax();
-      }, '60000');
+      }, '10000');
     }
   }
 
@@ -3943,10 +3864,6 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     if (typeof Parallax == "undefined") {
       return
     }
-    
-      if (!document.querySelector("#full")&&!document.querySelector("#half")) {
-        return
-      }
     
     if (imgs.length>=1) {
       Parallax.options.src = imgs[index % imgs.length];
@@ -4149,7 +4066,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/编程艺术/","name":"编程艺术"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/04/10/obsidian-教程/","name":"程序的本质：代码是如何被执行的"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"程序的本质：代码是如何被执行的","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/04/10/obsidian-%E6%95%99%E7%A8%8B/","wordCount":0,"datePublished":"2023-04-10T06:14:00.000Z","dateModified":"2024-01-18T00:56:18.986Z","articleSection":"编程艺术","keywords":"CS","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","sameAs":["https://github.com/volantis-x"],"description":"生活很美，值得去记录，难道不是吗"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://wenjing-xin.github.io/","name":"dreamChaser"}},{"@type":"ListItem","position":2,"item":{"@id":"https://wenjing-xin.github.io/categories/编程艺术/","name":"编程艺术"}},{"@type":"ListItem","position":3,"item":{"@id":"https://wenjing-xin.github.io/2023/04/10/程序的本质：代码是如何被执行的/","name":"程序的本质：代码是如何被执行的"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"dreamChaser","url":"https://wenjing-xin.github.io/","keywords":"Java,思考,dreamChaser的博客,wenjing-xin,glory|博客","description":"生活很美，值得去记录，难道不是吗","author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/","description":"生活很美，值得去记录，难道不是吗"},"publisher":{"@type":"Organization","name":"dreamChaser","url":"https://wenjing-xin.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://wenjing-xin.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"程序的本质：代码是如何被执行的","description":"生活很美，值得去记录，难道不是吗","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/"},"author":{"@type":"Person","name":"稳静逐梦","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://wenjing-xin.github.io/"},"publisher":{"@type":"Organization","name":"dreamChaser","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://wenjing-xin.github.io/2023/04/10/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%A3%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%89%A7%E8%A1%8C%E7%9A%84/","wordCount":0,"datePublished":"2023-04-10T06:14:00.000Z","dateModified":"2024-02-15T15:40:41.110Z","articleSection":"编程艺术","keywords":"CS","image":{"@type":"ImageObject","url":"https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152340648.png","width":1024,"height":768}}]</script>
 
 
 
@@ -4233,5 +4150,11 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     <!-- Custom Files bodyEnd begin-->
     
     <!-- Custom Files bodyEnd end-->
+    <!-- front-matter body_end begin -->
+    <!-- front-matter body_end end -->
+    <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/sakura.js"></script>
+    <!-- <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/mouse_slide.js"></script> -->
+    <script src="https://gcore.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/clicksocialist.js"></script>
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"right","width":210,"height":360},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
 </html>
