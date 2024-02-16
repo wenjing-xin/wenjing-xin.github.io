@@ -38,8 +38,7 @@
 .DarkMode a,
 .DarkMode p,
 .DarkMode li,
-.DarkMode .label {
-    color: rgba(255, 255, 255, .6);
+.DarkMode .label {color: rgba(255, 255, 255, .6);
 }
 
 
@@ -50,12 +49,9 @@
 .DarkMode #page .yya,
 .DarkMode #content,
 .DarkMode #contentss,
-.DarkMode #footer {
-    background-color: #292a2d;
-}
+.DarkMode #footer {background-color: #292a2d;}
 .DarkMode strong,
-.DarkMode img {
-    filter: brightness(.7);
+.DarkMode img {filter: brightness(.7);
 }
 
 /* sun and noon */
@@ -70,8 +66,7 @@
     z-index: 88888888
 }
 
-.Cuteen_DarkSky {
-    background: linear-gradient(#feb8b0, #fef9db)
+.Cuteen_DarkSky {background: linear-gradient(#feb8b0, #fef9db)
 }
 
 .Cuteen_DarkSky:before {
@@ -80,9 +75,7 @@
     background: linear-gradient(#4c3f6d, #6c62bb, #93b1ed)
 }
 
-.DarkMode .Cuteen_DarkSky:before {
-    opacity: 1
-}
+.DarkMode .Cuteen_DarkSky:before {opacity: 1}
 
 .Cuteen_DarkPlanet {
     z-index: 99999999;
@@ -97,22 +90,18 @@
 }
 
 @-webkit-keyframes CuteenPlanetMove {
-    0% {
-        transform: rotate(0)
+    0% {transform: rotate(0)
     }
 
-    to {
-        transform: rotate(360deg)
+    to {transform: rotate(360deg)
     }
 }
 
 @keyframes CuteenPlanetMove {
-    0% {
-        transform: rotate(0)
+    0% {transform: rotate(0)
     }
 
-    to {
-        transform: rotate(360deg)
+    to {transform: rotate(360deg)
     }
 }
 
