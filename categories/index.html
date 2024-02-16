@@ -30,8 +30,8 @@
   </head>
   <body itemscope itemtype="http://schema.org/WebPage">
   
-    <script src="./custom/darkmode.js" defer></script>
-    <script src="./custom/subtitle.js" defer></script>
+    <script src="/custom/darkmode.js" defer></script>
+    <script src="/custom/subtitle.js" defer></script>
   </body>
 </html>
 
@@ -1771,7 +1771,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1708068560746),
+    lastupdate: new Date(1708081713708),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate","webinfo","music"],
       for_post: ["toc"],
@@ -2388,13 +2388,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/games/" title="豆瓣-游戏🎮"
+                href="/about" title="敝人"
                   
                   
                   
-                    active-action="action-games"
+                    active-action="action-about"
                   >
-                  豆瓣-游戏🎮
+                  敝人
                 </a>
                 
               </li>
@@ -2589,13 +2589,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/games/" title="豆瓣-游戏🎮"
+                href="/about" title="敝人"
                   
                   
                   
-                    active-action="action-games"
+                    active-action="action-about"
                   >
-                  豆瓣-游戏🎮
+                  敝人
                 </a>
                 
               </li>
@@ -3585,29 +3585,69 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
 
-      <script type="text/javascript">
-  volantis.layoutHelper("comments",`<div id="gitalk-container"></div>`)
-  function pjax_gitalk() {
-    if(!document.querySelector("#gitalk-container"))return;
-    let path = pdata.commentPath;
-    if (path.length == 0) {
-      let defaultPath = '';
-      path = defaultPath || decodeURI(window.location.pathname);
-    }
-    if (document.getElementById('gitalk-container') != null) {
-      var gitalk = new Gitalk(
-        Object.assign(
-          Object.assign({"js":"https://unpkg.com/gitalk@1/dist/gitalk.min.js","clientID":"89bcd15b786fd5d13593","clientSecret":"e20d5035fd30ebc8c0cf1f7035cabddaa2632944","repo":"hexo-comment","owner":"wenjing-xin","admin":["wenjing-xin"],"path":null}, {
-            id: path,
-            distractionFreeMode: false  // Facebook-like distraction free mode
-          }),
-        pdata.commentConfig)
-      );
-      gitalk.render('gitalk-container');
-    }
+      <script>
+  volantis.layoutHelper("comments",`<div id="artalk_container"><i class="fa-solid fa-cog fa-spin fa-fw fa-2x"></i></div>`);
+  function load_artalk() {
+    if(!document.querySelectorAll("#artalk_container")[0])return;
+    volantis.css("http://artalk.wenjing.xin:8080/dist/Artalk.css");
+    volantis.js("http://artalk.wenjing.xin:8080/dist/Artalk.js").then(pjax_artalk);
   }
-  volantis.js('https://unpkg.com/gitalk@1/dist/gitalk.min.js').then(pjax_gitalk)
-  volantis.pjax.push(pjax_gitalk);
+
+  function pjax_artalk() {
+    if(!document.querySelectorAll("#artalk_container")[0])return;
+    let path = pdata.commentPath;
+    let placeholder = pdata.commentPlaceholder || "为及时收到回复提醒，请确保您填入的e-mail地址能收到邮件；根据合规要求评论已启用审核机制，您的评论将在审核后才展示.." || "";
+    if (path.length == 0) {
+      path = '/comments' || decodeURI(window.location.pathname);
+    }
+    if(!'posts/:abbrlink/'.includes('/index.html')) {
+      path = path.replaceAll('/index.html', '/').replaceAll('.html', '')
+    }
+
+    volantis.artalk = new Artalk(Object.assign({"js":"http://artalk.wenjing.xin:8080/dist/Artalk.js","css":"http://artalk.wenjing.xin:8080/dist/Artalk.css","server":"http://artalk.wenjing.xin:8080/","path":"/comments","placeholder":"为及时收到回复提醒，请确保您填入的e-mail地址能收到邮件；根据合规要求评论已启用审核机制，您的评论将在审核后才展示..","imageUploader":{"api":null,"token":null,"resp":null}}, {
+      el: '#artalk_container',
+      pageKey: path,
+      pageTitle: document.title,
+      placeholder: placeholder,
+      useBackendConf: true,
+      site: 'dreamChaser',
+      darkMode: volantis.dark.mode === "dark",
+      pvEl: '#artalk_visitors',
+
+      
+    }));
+
+    Artalk.use(ctx => {
+      ctx.on('list-loaded', () => {
+        if (typeof VolantisFancyBox === "undefined"){
+          const checkFancyBox = setInterval(() => {
+            if(typeof VolantisFancyBox === "undefined") return;
+            clearInterval(checkFancyBox);
+            VolantisFancyBox.groupBind('.atk-content img:not([atk-emoticon])', 'Comments');
+          })
+        } else {
+          VolantisFancyBox.groupBind('.atk-content img:not([atk-emoticon])', 'Comments');
+        }
+      })
+    })
+  }
+
+  load_artalk();
+  volantis.pjax.push(()=>{
+    if (typeof Artalk === "undefined") {
+      load_artalk();
+    } else {
+      pjax_artalk();
+    }
+  },'artalk');
+
+  function dark_artalk() {
+    if(!document.querySelectorAll("#artalk_container")[0]) return;
+    volantis.artalk.then(ctx => {
+      ctx.setDarkMode(volantis.dark.mode === "dark")
+    })
+  }
+  volantis.dark.push(dark_artalk);
 </script>
 
     
@@ -3912,7 +3952,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152017365.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019455.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015087.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016215.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019170.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152014748.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016479.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152020332.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018248.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018512.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015153.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152014748.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016215.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019170.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015087.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152016479.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018248.png","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152020332.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152019455.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152015153.jpg","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152017365.jpg","https://dream-chaser.oss-cn-beijing.aliyuncs.com/hexo-blog/202402152018512.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
