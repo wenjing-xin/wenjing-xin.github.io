@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
 /* 锚点定位 */
 const locationHash = () => {
   if (window.location.hash) {
@@ -39,6 +40,8 @@ const locationHash = () => {
   }
 }
 Object.freeze(locationHash);
+
+
 // 动态标题
 const changeTitle = () => {
   sessionStorage.setItem("domTitle", document.title);
@@ -52,6 +55,7 @@ const changeTitle = () => {
     }
   });
 }
+Object.freeze(changeTitle);
 
 /* Main */
 const VolantisApp = (() => {
