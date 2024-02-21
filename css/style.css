@@ -1481,7 +1481,7 @@ svg.loading {
 #l_main.no_sidebar {
   width: 100%;
   padding-right: 0;
-  max-width: 880px;
+  max-width: 1260px;
   margin: auto;
 }
 @media screen and (min-width: 2048px) {
@@ -1892,7 +1892,7 @@ svg.loading {
   display: flex /* NEW, Spec - Opera 12.1, Firefox 20+ */;
   display: flex;
   width: 100%;
-  max-width: 1120px;
+  max-width: 1500px;
   margin: 0 auto;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
@@ -2039,18 +2039,18 @@ img.lazyload:not(.placeholder).loaded {
   display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
   display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
   display: block;
-  margin-top: -48px;
-  height: 96px;
+  margin-top: -59px;
+  height: 107px;
   visibility: hidden;
   pointer-events: none;
 }
 .md h1:before,
 .md h2:before {
-  margin-top: -32px;
+  margin-top: -43px;
 }
 .md .article-meta+h1,
 .md .article-meta+h2 {
-  margin-top: -80px;
+  margin-top: -91px;
 }
 .md h3,
 .md h4,
@@ -2059,16 +2059,16 @@ img.lazyload:not(.placeholder).loaded {
   margin-bottom: 1.5em;
 }
 .md h3:before {
-  margin-top: -56px;
+  margin-top: -67px;
 }
 .md h4:before {
-  margin-top: -64px;
+  margin-top: -75px;
 }
 .md h5 {
   font-weight: bold;
 }
 .md h2+h3:before {
-  margin-top: -80px;
+  margin-top: -91px;
 }
 .md ul,
 .md ol {
@@ -2477,7 +2477,7 @@ img.lazyload:not(.placeholder).loaded {
 #u-search .modal .modal-header {
   position: relative;
   width: 100%;
-  height: 64px;
+  height: 75px;
   z-index: 3;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -2505,13 +2505,13 @@ img.lazyload:not(.placeholder).loaded {
   display: block;
   position: absolute;
   width: 55px;
-  height: 64px;
+  height: 75px;
   top: 0;
   right: 0;
   color: #44d7b6;
   cursor: pointer;
   text-align: center;
-  line-height: 64px;
+  line-height: 75px;
   vertical-align: middle;
   transition: all 0.28s ease;
   -webkit-transition: all 0.28s ease;
@@ -2576,7 +2576,7 @@ img.lazyload:not(.placeholder).loaded {
   background: transparent;
   border: none;
   width: 50px;
-  height: 64px;
+  height: 75px;
   vertical-align: middle;
   color: #44d7b6;
   z-index: 2;
@@ -2585,8 +2585,8 @@ img.lazyload:not(.placeholder).loaded {
   position: absolute;
   padding: 16px;
   width: 100%;
-  height: calc(100% - 64px);
-  top: 64px;
+  height: calc(100% - 75px);
+  top: 75px;
   left: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -2702,7 +2702,7 @@ img.lazyload:not(.placeholder).loaded {
 }
 #l_side .widget.sticky {
   position: sticky;
-  top: 80px;
+  top: 91px;
   z-index: 1;
 }
 #l_side .widget >.content {
@@ -3313,7 +3313,7 @@ img.lazyload:not(.placeholder).loaded {
 }
 .widget-sticky {
   position: sticky;
-  top: 80px;
+  top: 91px;
   z-index: 10;
 }
 .snackbar-wrap {
@@ -3326,10 +3326,10 @@ img.lazyload:not(.placeholder).loaded {
   z-index: 2;
 }
 .snackbar-content {
-  max-width: 1120px;
+  max-width: 1500px;
   margin: 16px auto;
 }
-@media screen and (max-width: 1120px) {
+@media screen and (max-width: 1500px) {
   .snackbar-content {
     max-width: 100%;
   }
@@ -3406,7 +3406,7 @@ img.lazyload:not(.placeholder).loaded {
   padding-bottom: 4px;
 }
 #l_side .toc-wrapper .content {
-  max-height: calc(100vh - 144px);
+  max-height: calc(100vh - 155px);
 }
 #l_side .toc-wrapper .content a {
   border-left: 2px solid transparent;
@@ -3427,7 +3427,7 @@ img.lazyload:not(.placeholder).loaded {
     max-height: 1000px;
     width: auto;
     max-width: calc(100% - 2 * 16px);
-    top: 48px;
+    top: 59px;
     right: 16px;
     border-radius: 4px;
     -webkit-border-radius: 4px;
